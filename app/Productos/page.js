@@ -38,7 +38,7 @@ const Productos = async () => {
 
     return (
       <div>
-        <TitleSection title={"Productos"} image="/Banner.jpg" />
+        <TitleSection title={"Productos"} image="/Banner.webp" />
 
         <StoreComponent products={productos} categories={categorias} />
       </div>

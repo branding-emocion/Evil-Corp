@@ -58,7 +58,7 @@ const Login = () => {
         <div
           className="hidden bg-cover lg:block lg:w-2/3"
           style={{
-            backgroundImage: "url(/Banner.jpg)",
+            backgroundImage: "url(/Banner.webp)",
           }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900/30">

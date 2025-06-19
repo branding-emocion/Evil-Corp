@@ -25,10 +25,10 @@ const HomePage = () => {
 
   const BannerInicio = [
     {
-      imagen: "/Banner.jpg",
+      imagen: "/Banner.webp",
     },
     {
-      imagen: "/Banner2.jpg",
+      imagen: "/Banner2.webp",
     },
   ];
 
