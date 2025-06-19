@@ -58,7 +58,7 @@ const Login = () => {
         <div
           className="hidden bg-cover lg:block lg:w-2/3"
           style={{
-            backgroundImage: "url(/Banner/BannerLogin.jpg)",
+            backgroundImage: "url(/Banner.jpg)",
           }}
         >
           <div className="flex items-center h-full px-20 bg-gray-900/30">
@@ -78,18 +78,6 @@ const Login = () => {
         <div className="flex items-center w-full max-w-md px-6 mx-auto lg:w-2/6">
           <div className="flex-1 text-black ">
             <div className="text-center">
-              <figure className=" my-2 md:w-full md:h-full md:flex md:justify-center  md:mx-auto mr-2 rounded-md overflow-hidden">
-                <Image
-                  src={`/LogoColor.svg`}
-                  width={250}
-                  height={250}
-                  alt="Inicio"
-                  title="Logo principal"
-                  style={{
-                    objectFit: "cover",
-                  }}
-                />
-              </figure>
               <h2 className="text-3xñ sm:text-4xl font-bold text-center  ">
                 ¡ Bienvenido(a) !
               </h2>
