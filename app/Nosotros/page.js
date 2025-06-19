@@ -111,7 +111,7 @@ export default function NosotrosPage() {
               <motion.div variants={fadeInVariants} className="relative">
                 <div className="relative overflow-hidden rounded-2xl shadow-2xl">
                   <img
-                    src="https://hebbkx1anhila5yf.public.blob.vercel-storage.com/image-JYifqY6jT5MoziZXVEf7EeliFdvDsq.png"
+                    src="/QuienesSomos.jpg"
                     alt="Corporación R&L - Instalaciones y Maquinaria"
                     className="w-full h-96 object-cover"
                   />

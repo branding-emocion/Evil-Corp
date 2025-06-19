@@ -1,156 +1,12 @@
-// "use client";
-// import React from "react";
-// import "react-responsive-carousel/lib/styles/carousel.min.css"; // requires a loader
-// import { Carousel } from "react-responsive-carousel";
-// import { motion } from "framer-motion";
-// import Link from "next/link";
-
-// import { Phone, ShoppingBag, Users } from "lucide-react";
-
-// const HomgePage = () => {
-//   const BannerInicio = [
-//     {
-//       imagen: "/Banner/CanInicioBan.jpg",
-//     },
-//     {
-//       imagen: "/Banner/Banner2.jpg",
-//     },
-//   ];
-//   const fadeInVariants = {
-//     hidden: { opacity: 0 },
-//     visible: { opacity: 1 },
-//   };
-
-//   return (
-//     <div>
-//       <Carousel infiniteLoop autoPlay showThumbs={false} showStatus={false}>
-//         {BannerInicio?.map((banner, index) => (
-//           <div key={index} className="relative w-full h-full sm:h-[93vh]">
-//             <img
-//               src={banner.imagen}
-//               className="h-full w-full object-contain lg:object-cover overflow-hidden  "
-//               alt={`slider ${index}`}
-//             />
-
-//             <motion.div
-//               className="absolute top-0 left-0 w-full h-full text-white bg-black/40 hidden lg:block "
-//               initial="hidden"
-//               animate="visible"
-//               variants={fadeInVariants}
-//               transition={{ duration: 0.8, delay: 0.2 }}
-//             >
-//               <div className="flex   justify-start items-end -mt-20 max-w-[883px] h-full pl-2 sm:text-3xl sm:pl-20">
-//                 <div className="max-w-[40rem] space-y-1 sm:space-y-4">
-//                   <motion.section
-//                     className="sm:p-2 font-bold bg-Secundario border border-Secundario text-xl uppercase rounded-3xl rounded-br-none rounded-tl-none outline-none shadow-lg hover:shadow-xl hover:opacity-90 duration-200 w-[10.5rem] text-white"
-//                     initial="hidden"
-//                     animate="visible"
-//                     variants={fadeInVariants}
-//                     transition={{ duration: 0.8, delay: 0.2 }}
-//                   >
-//                     Perfección
-//                   </motion.section>
-//                   <motion.p
-//                     className="text-start text-base sm:text-4xl font-extrabold"
-//                     initial="hidden"
-//                     animate="visible"
-//                     variants={fadeInVariants}
-//                     transition={{ duration: 0.8, delay: 0.4 }}
-//                   >
-//                     Arte y<span className=" uppercase"> Confección</span>
-//                   </motion.p>
-
-//                   <Link href={"/Productos"} className="flex justify-start">
-//                     <motion.div
-//                       className="group font-medium tracking-wide select-none text-base relative inline-flex items-center justify-start cursor-pointer sm:h-12 border-2 border-solid py-0 px-6 rounded-md overflow-hidden z-10 transition-all duration-300 ease-in-out outline-0 bg-transparent text-white border-Secundario   hover:bg-Secundario"
-//                       initial="hidden"
-//                       animate="visible"
-//                       variants={fadeInVariants}
-//                       transition={{ duration: 0.8, delay: 0.6 }}
-//                     >
-//                       <strong className="font-bold uppercase">Productos</strong>
-//                       <span className="absolute bg-Secundario bottom-0 w-0 left-1/2 h-full -translate-x-1/2 transition-all ease-in-out duration-300 group-hover:w-[105%] -z-[1] group-focus:w-[105%]" />
-//                     </motion.div>
-//                   </Link>
-//                 </div>
-//               </div>
-//             </motion.div>
-//           </div>
-//         ))}
-//       </Carousel>
-
-//       {/* <CarrouselVideo VideoCarrousel={BannerInicio || []} /> */}
-
-//       <section className="py-12 bg-white">
-//         <div className="container mx-auto px-4">
-//           <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-//             <Link href="/Productos" className="group">
-//               <div className="bg-gray-100 rounded-lg p-6 transition-all duration-300 hover:shadow-md">
-//                 <ShoppingBag className="w-12 h-12 text-cyan-600 mb-4" />
-//                 <h2 className="text-2xl font-semibold mb-2 text-gray-800">
-//                   Productos
-//                 </h2>
-//                 <p className="text-gray-600">
-//                   Explora nuestra amplia gama de productos para tus proyectos
-//                   creativos y del hogar.
-//                 </p>
-//                 <div className="mt-4">
-//                   <span className="text-cyan-600 font-semibold group-hover:underline">
-//                     Ver productos
-//                   </span>
-//                 </div>
-//               </div>
-//             </Link>
-
-//             <Link href="/Nosotros" className="group">
-//               <div className="bg-gray-100 rounded-lg p-6 transition-all duration-300 hover:shadow-md">
-//                 <Users className="w-12 h-12 text-cyan-600 mb-4" />
-//                 <h2 className="text-2xl font-semibold mb-2 text-gray-800">
-//                   Nosotros
-//                 </h2>
-//                 <p className="text-gray-600">
-//                   Conoce más sobre nuestra historia, valores y el equipo detrás
-//                   de Reanda.
-//                 </p>
-//                 <div className="mt-4">
-//                   <span className="text-cyan-600 font-semibold group-hover:underline">
-//                     Conócenos
-//                   </span>
-//                 </div>
-//               </div>
-//             </Link>
-
-//             <Link href="/Contacto" className="group">
-//               <div className="bg-gray-100 rounded-lg p-6 transition-all duration-300 hover:shadow-md">
-//                 <Phone className="w-12 h-12 text-cyan-600 mb-4" />
-//                 <h2 className="text-2xl font-semibold mb-2 text-gray-800">
-//                   Contacto
-//                 </h2>
-//                 <p className="text-gray-600">
-//                   ¿Tienes preguntas? Estamos aquí para ayudarte. Contáctanos
-//                   para más información.
-//                 </p>
-//                 <div className="mt-4">
-//                   <span className="text-cyan-600 font-semibold group-hover:underline">
-//                     Contáctanos
-//                   </span>
-//                 </div>
-//               </div>
-//             </Link>
-//           </div>
-//         </div>
-//       </section>
-//     </div>
-//   );
-// };
-
-// export default HomgePage;
-
 "use client";
 import "react-responsive-carousel/lib/styles/carousel.min.css";
 import { Carousel } from "react-responsive-carousel";
 import { motion } from "framer-motion";
 import Link from "next/link";
+import { useState, useEffect } from "react";
+import { collection, onSnapshot, query, where } from "firebase/firestore";
+import { db } from "@/firebase/firebaseClient";
+import Image from "next/image";
 import {
   Phone,
   ShoppingBag,
@@ -159,15 +15,20 @@ import {
   Shield,
   Zap,
   ArrowRight,
+  Loader2,
 } from "lucide-react";
 
 const HomePage = () => {
+  const [productosDestacados, setProductosDestacados] = useState([]);
+  const [categorias, setCategorias] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
+
   const BannerInicio = [
     {
-      imagen: "/Banner/CanInicioBan.jpg",
+      imagen: "/Banner.jpg",
     },
     {
-      imagen: "/Banner/Banner2.jpg",
+      imagen: "/Banner2.jpg",
     },
   ];
 
@@ -186,25 +47,60 @@ const HomePage = () => {
     },
   };
 
-  const productos = [
-    {
-      titulo: "Grupos Electrógenos",
-      descripcion:
-        "Generadores diesel trifásicos PRAMAC de alta calidad y eficiencia",
-      potencias: "60 KVA - 1400 KVA",
-    },
-    {
-      titulo: "Compresores Eléctricos",
-      descripcion:
-        "Compresores de tornillo con variador de frecuencia Atlas Copco",
-      potencias: "30 HP - 160 HP",
-    },
-    {
-      titulo: "Maquinaria Pesada",
-      descripcion: "Retroexcavadoras, montacargas y equipos para construcción",
-      potencias: "Diversas capacidades",
-    },
-  ];
+  // Obtener productos recomendados y categorías desde Firebase
+  useEffect(() => {
+    const categoriasRef = collection(db, "Categorias");
+    const productosRef = collection(db, "Productos");
+
+    // Query para obtener solo productos recomendados y activos
+    const productosRecomendadosQuery = query(
+      productosRef,
+      where("Recomendado", "==", true),
+      where("Estado", "==", "Activo")
+    );
+
+    const unsubscribeCategorias = onSnapshot(categoriasRef, (snapshot) => {
+      const categoriasData = snapshot?.docs?.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setCategorias(categoriasData);
+    });
+
+    const unsubscribeProductos = onSnapshot(
+      productosRecomendadosQuery,
+      (snapshot) => {
+        const productosData = snapshot?.docs?.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setProductosDestacados(productosData);
+        setIsLoading(false);
+      }
+    );
+
+    return () => {
+      unsubscribeCategorias();
+      unsubscribeProductos();
+    };
+  }, []);
+
+  // Función para obtener el nombre de la categoría
+  const getNombreCategoria = (categoriaId) => {
+    const categoria = categorias.find((cat) => cat.id === categoriaId);
+    return categoria?.NombreCategoria || "Sin categoría";
+  };
+
+  // Función para obtener la imagen del producto
+  const getImagenProducto = (producto) => {
+    if (producto?.ImagenesGenerales?.length > 0) {
+      return producto.ImagenesGenerales[0];
+    }
+    if (producto?.Variantes?.length > 0) {
+      return producto.Variantes[0]?.url;
+    }
+    return "/placeholder.svg?height=200&width=300";
+  };
 
   return (
     <div>
@@ -347,49 +243,105 @@ const HomePage = () => {
             variants={fadeInVariants}
           >
             <h2 className="text-4xl font-bold text-gray-800 mb-4">
-              Nuestros Productos
+              Productos Destacados
             </h2>
             <p className="text-xl text-gray-600 max-w-2xl mx-auto">
-              Ofrecemos una amplia gama de maquinaria industrial para satisfacer
-              las necesidades de tu empresa
+              Descubre nuestra selección de maquinaria industrial recomendada
+              para tu empresa
             </p>
           </motion.div>
 
-          <motion.div
-            className="grid grid-cols-1 md:grid-cols-3 gap-8"
-            initial="hidden"
-            whileInView="visible"
-            viewport={{ once: true }}
-            variants={staggerContainer}
-          >
-            {productos.map((producto, index) => (
-              <motion.div
-                key={index}
-                variants={fadeInVariants}
-                className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group"
-              >
-                <div className="h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center">
-                  <img
-                    src="/placeholder.svg?height=200&width=300"
-                    alt={producto.titulo}
-                    className="w-full h-full object-cover"
-                  />
-                </div>
-                <div className="p-6">
-                  <h3 className="text-xl font-bold text-gray-800 mb-2">
-                    {producto.titulo}
-                  </h3>
-                  <p className="text-gray-600 mb-3">{producto.descripcion}</p>
-                  <div className="flex items-center justify-between">
-                    <span className="text-sm font-medium text-orange-600">
-                      {producto.potencias}
-                    </span>
-                    <ArrowRight className="w-5 h-5 text-orange-500 group-hover:translate-x-1 transition-transform" />
+          {isLoading ? (
+            <div className="flex items-center justify-center py-12">
+              <div className="text-center">
+                <Loader2 className="h-12 w-12 animate-spin text-orange-500 mx-auto mb-4" />
+                <p className="text-gray-600">
+                  Cargando productos destacados...
+                </p>
+              </div>
+            </div>
+          ) : productosDestacados.length > 0 ? (
+            <motion.div
+              className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8"
+              initial="hidden"
+              whileInView="visible"
+              viewport={{ once: true }}
+              variants={staggerContainer}
+            >
+              {productosDestacados?.slice(0, 6).map((producto, index) => (
+                <motion.div
+                  key={producto.id}
+                  variants={fadeInVariants}
+                  className="bg-white rounded-lg shadow-lg overflow-hidden hover:shadow-xl transition-all duration-300 group"
+                >
+                  <div className="relative h-48 bg-gradient-to-br from-gray-200 to-gray-300 flex items-center justify-center overflow-hidden">
+                    <Image
+                      src={getImagenProducto(producto) || "/placeholder.svg"}
+                      alt={producto.NombreProducto}
+                      width={300}
+                      height={200}
+                      className="w-full h-full object-contain group-hover:scale-105 transition-transform duration-300"
+                    />
+                    <div className="absolute top-3 right-3">
+                      <span className="bg-orange-500 text-white text-xs font-bold px-2 py-1 rounded-full">
+                        Destacado
+                      </span>
+                    </div>
                   </div>
-                </div>
-              </motion.div>
-            ))}
-          </motion.div>
+                  <div className="p-6">
+                    <div className="mb-2">
+                      <span className="text-xs font-medium text-orange-600 uppercase tracking-wide">
+                        {getNombreCategoria(producto.Categoria)}
+                      </span>
+                    </div>
+                    <h3 className="text-xl font-bold text-gray-800 mb-2 line-clamp-2">
+                      {producto.NombreProducto}
+                    </h3>
+                    {producto.ITEM && (
+                      <p className="text-sm text-gray-600 mb-2">
+                        <span className="font-semibold">ITEM:</span>{" "}
+                        {producto.ITEM}
+                      </p>
+                    )}
+                    {producto.Description && (
+                      <div
+                        className="text-gray-600 mb-3 line-clamp-3 text-sm"
+                        dangerouslySetInnerHTML={{
+                          __html:
+                            producto.Description.replace(
+                              /\n/g,
+                              "<br>"
+                            ).substring(0, 120) + "...",
+                        }}
+                      />
+                    )}
+                    <div className="flex items-center justify-between">
+                      <Link href={`/Productos?${producto.id}`}>
+                        <button className="text-orange-500 hover:text-orange-600 font-semibold text-sm flex items-center group">
+                          Ver detalles
+                          <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                        </button>
+                      </Link>
+                      <ArrowRight className="w-5 h-5 text-orange-500 group-hover:translate-x-1 transition-transform" />
+                    </div>
+                  </div>
+                </motion.div>
+              ))}
+            </motion.div>
+          ) : (
+            <div className="text-center py-12">
+              <div className="text-gray-400 mb-4">
+                <ShoppingBag className="h-16 w-16 mx-auto" />
+              </div>
+              <h3 className="text-lg font-semibold text-gray-600 mb-2">
+                No hay productos destacados
+              </h3>
+              <p className="text-gray-500">
+                Los productos destacados aparecerán aquí cuando estén
+                disponibles
+              </p>
+            </div>
+          )}
 
           <motion.div
             className="text-center mt-12"

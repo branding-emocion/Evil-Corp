@@ -412,7 +412,7 @@ const Contacto = () => {
 
                     <Button
                       type="submit"
-                      className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300"
+                      className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:cursor-pointer"
                       disabled={IsLoading}
                     >
                       {IsLoading ? (
@@ -421,7 +421,7 @@ const Contacto = () => {
                           <span>Enviando...</span>
                         </div>
                       ) : (
-                        <div className="flex items-center space-x-2">
+                        <div className="flex items-center space-x-2 ">
                           <Send className="w-5 h-5" />
                           <span>Enviar Mensaje</span>
                         </div>

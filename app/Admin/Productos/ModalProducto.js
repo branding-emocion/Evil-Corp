@@ -1,3 +1,4 @@
+"use client";
 import { Button } from "@/components/ui/button";
 import {
   Dialog,
@@ -9,12 +10,11 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 
-import React, { useEffect, useState } from "react";
+import { useEffect, useState } from "react";
 import {
   getDownloadURL,
   ref,
   uploadBytes,
-  getStorage,
   uploadBytesResumable,
 } from "firebase/storage";
 import {
@@ -22,7 +22,6 @@ import {
   collection,
   doc,
   onSnapshot,
-  serverTimestamp,
   updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseClient";
@@ -33,22 +32,120 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import dynamic from "next/dynamic";
-import { formats, modules } from "@/lib/QuillConfig";
 
-import "react-quill/dist/quill.snow.css";
-import FileUploaderProductos from "./FileUploaderProductos";
 import FileUploaderGeneral from "./FileUploaderGeneral";
 import DeleteImagenes from "@/lib/DeleteImagenes";
-import UploadPDFFichaTecnica from "./UploadPDFFichaTecnica";
 import DeletePdf from "@/lib/DeletePdf";
-import { FileIcon } from "lucide-react";
 import { useToast } from "@/hooks/use-toast";
+import { Textarea } from "@/components/ui/textarea";
+import { Bold, Italic, List, ListOrdered, Link, ImageIcon } from "lucide-react";
 
-const QuillNoSSRWrapper = dynamic(() => import("react-quill"), {
-  ssr: false,
-  loading: () => <p>Loading ...</p>,
-});
+// Editor de texto rico personalizado y moderno
+const RichTextEditor = ({ value, onChange, placeholder, className }) => {
+  const [content, setContent] = useState(value || "");
+  const [isPreview, setIsPreview] = useState(false);
+
+  useEffect(() => {
+    if (value !== content) {
+      setContent(value || "");
+    }
+  }, [value]);
+
+  const handleChange = (newContent) => {
+    setContent(newContent);
+    if (onChange) {
+      onChange(newContent);
+    }
+  };
+
+  const insertText = (before, after = "") => {
+    const textarea = document.getElementById("rich-textarea");
+    const start = textarea.selectionStart;
+    const end = textarea.selectionEnd;
+    const selectedText = content.substring(start, end);
+    const newText =
+      content.substring(0, start) +
+      before +
+      selectedText +
+      after +
+      content.substring(end);
+    handleChange(newText);
+
+    // Restaurar el cursor
+    setTimeout(() => {
+      textarea.focus();
+      textarea.setSelectionRange(start + before.length, end + before.length);
+    }, 0);
+  };
+
+  const formatButtons = [
+    { icon: Bold, action: () => insertText("**", "**"), title: "Negrita" },
+    { icon: Italic, action: () => insertText("*", "*"), title: "Cursiva" },
+    { icon: List, action: () => insertText("\n- "), title: "Lista" },
+    {
+      icon: ListOrdered,
+      action: () => insertText("\n1. "),
+      title: "Lista numerada",
+    },
+    { icon: Link, action: () => insertText("[", "](url)"), title: "Enlace" },
+    {
+      icon: ImageIcon,
+      action: () => insertText("![alt](", ")"),
+      title: "Imagen",
+    },
+  ];
+
+  return (
+    <div className={`border rounded-md ${className}`}>
+      {/* Toolbar */}
+      <div className="flex items-center gap-1 p-2 border-b bg-gray-50">
+        {formatButtons.map((button, index) => (
+          <button
+            key={index}
+            type="button"
+            onClick={button.action}
+            className="p-2 hover:bg-gray-200 rounded transition-colors"
+            title={button.title}
+          >
+            <button.icon className="w-4 h-4" />
+          </button>
+        ))}
+        <div className="ml-auto">
+          <button
+            type="button"
+            onClick={() => setIsPreview(!isPreview)}
+            className="px-3 py-1 text-sm bg-blue-100 hover:bg-blue-200 rounded transition-colors"
+          >
+            {isPreview ? "Editar" : "Vista previa"}
+          </button>
+        </div>
+      </div>
+
+      {/* Editor/Preview */}
+      {isPreview ? (
+        <div className="p-4 min-h-32 prose max-w-none">
+          <div
+            dangerouslySetInnerHTML={{
+              __html: content
+                .replace(/\n/g, "<br>")
+                .replace(/\*\*(.*?)\*\*/g, "<strong>$1</strong>")
+                .replace(/\*(.*?)\*/g, "<em>$1</em>"),
+            }}
+          />
+        </div>
+      ) : (
+        <Textarea
+          id="rich-textarea"
+          value={content}
+          onChange={(e) => handleChange(e.target.value)}
+          placeholder={placeholder}
+          className="min-h-32 border-0 resize-none focus:ring-0"
+          rows={6}
+        />
+      )}
+    </div>
+  );
+};
 
 const ModalProducto = ({
   OpenModalProducto,
@@ -58,6 +155,7 @@ const ModalProducto = ({
   const [InputValues, setInputValues] = useState({
     Variantes: OpenModalProducto?.InfoEditar?.Variantes || [],
     TextoOpcion: "",
+    Description: OpenModalProducto?.InfoEditar?.Description || "",
   });
   const [Loading, setLoading] = useState(false);
   const { toast } = useToast();
@@ -65,32 +163,42 @@ const ModalProducto = ({
   const [files, setFiles] = useState([]);
   const [FilePDF, setFilePDF] = useState([]);
 
-  console.log("OpenModalProducto", OpenModalProducto);
-
   useEffect(() => {
     if (!Object.keys(OpenModalProducto?.InfoEditar).length > 0) {
       return;
     }
-    onSnapshot(
-      collection(db, `Marcas`),
-      // orderBy("email", "asc"),
-      (snapshot) =>
-        setMarcas(
-          snapshot?.docs?.map((doc) => ({
-            id: doc.id,
-            ...doc.data(),
-          }))
-        )
+    onSnapshot(collection(db, `Marcas`), (snapshot) =>
+      setMarcas(
+        snapshot?.docs?.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }))
+      )
     );
   }, [OpenModalProducto?.InfoEditar]);
+
+  // Actualizar descripción cuando cambie la info a editar
+  useEffect(() => {
+    if (OpenModalProducto?.InfoEditar?.Description) {
+      setInputValues((prev) => ({
+        ...prev,
+        Description: OpenModalProducto.InfoEditar.Description,
+      }));
+    }
+  }, [OpenModalProducto?.InfoEditar?.Description]);
 
   const closeOpenModalProducto = () => {
     setOpenModalProducto({
       Visible: false,
       InfoEditar: {},
     });
-    setInputValues({});
+    setInputValues({
+      Variantes: [],
+      TextoOpcion: "",
+      Description: "",
+    });
   };
+
   const HandlerChange = (e) => {
     setInputValues({
       ...InputValues,
@@ -101,11 +209,11 @@ const ModalProducto = ({
   const uploadImagesGenerales = async (images, name, collection) => {
     const urlLinks = await Promise.all(
       images.map(async (image, index) => {
-        const extension = image.name.split(".").pop(); // Extrae la extensión del archivo
-        const timestamp = Date.now(); // Genera un timestamp para hacer el nombre único
+        const extension = image.name.split(".").pop();
+        const timestamp = Date.now();
         const imageRef = ref(
           storage,
-          `${collection}/${name}-${timestamp}/image-${index}.${extension}` // Agrega el timestamp al nombre
+          `${collection}/${name}-${timestamp}/image-${index}.${extension}`
         );
         await uploadBytes(imageRef, image);
         const url = await getDownloadURL(imageRef);
@@ -114,12 +222,12 @@ const ModalProducto = ({
     );
     return urlLinks;
   };
+
   const uploadImages = async (images, NombreCarpeta, variante) => {
-    // Seleccionamos solo la primera imagen de la lista
     const image = images;
 
     if (!image) {
-      return [{}]; // Si no hay imagen, retornamos un array vacío
+      return [{}];
     }
 
     const imageRef = ref(
@@ -133,7 +241,6 @@ const ModalProducto = ({
     await uploadBytes(imageRef, image);
     const url = await getDownloadURL(imageRef);
 
-    // Retornamos un array con un solo objeto que contiene la URL y la información de la variante
     return {
       url,
       Nombre: variante?.Nombre,
@@ -146,15 +253,15 @@ const ModalProducto = ({
     const storageRef = ref(storage, storagePath);
     const uploadTask = uploadBytesResumable(storageRef, FilePDF);
 
-    let urlPrd = "";
+    const urlPrd = "";
     uploadTask.on(
       "state_changed",
       (snap) => {
-        // Puedes agregar aquí un rastreador del progreso de la carga si lo deseas
+        // Progreso de carga
       },
       (err) => {
         console.error(err);
-        setUploading(false);
+        setLoading(false);
       },
       async () => {
         const url = await getDownloadURL(storageRef);
@@ -184,8 +291,6 @@ const ModalProducto = ({
           "Productos",
           `${OpenModalProducto?.InfoEditar?.id}`
         );
-
-        // Eliminar de inputValues "TextoOpcion" para no enviarlo a la base de datos , input values es un objeto
 
         if (Object.keys(InputValues).length > 2) {
           await updateDoc(UpdateRef, {
@@ -236,7 +341,7 @@ const ModalProducto = ({
         }
 
         if (InputValues?.Variantes?.length > 0) {
-          let FilesUpload = [];
+          const FilesUpload = [];
 
           for (const variante of InputValues?.Variantes) {
             if (variante?.Imagenes?.length > 0) {
@@ -276,7 +381,7 @@ const ModalProducto = ({
         return;
       } else {
         if (Object.keys(InputValues).length > 2) {
-          let FilesUpload = [];
+          const FilesUpload = [];
 
           if (InputValues?.Variantes?.length > 0) {
             for (const variante of InputValues?.Variantes) {
@@ -309,16 +414,15 @@ const ModalProducto = ({
             }
           }
 
-          // Add a new document with a generated id.
           const docRef = await addDoc(collection(db, "Productos"), {
             ...InputValues,
             Variantes: FilesUpload || InputValues?.Variantes || [],
           });
+
           if (FilePDF.name) {
             await handleUploadPdf(
               InputValues?.NombreProducto,
               FilePDF.name,
-
               `Productos/${docRef?.id}`
             );
           }
@@ -358,7 +462,7 @@ const ModalProducto = ({
       open={OpenModalProducto?.Visible}
       onOpenChange={closeOpenModalProducto}
     >
-      <DialogContent className="h-auto  w-[90%] md:w-full max-h-[95vh] overflow-auto   sm:max-w-4xl">
+      <DialogContent className="h-auto w-[90%] md:w-full max-h-[95vh] overflow-auto sm:max-w-4xl">
         <DialogHeader className="w-full h-full">
           <DialogTitle>
             {Object.keys(OpenModalProducto?.InfoEditar).length > 0
@@ -400,10 +504,10 @@ const ModalProducto = ({
                     Estado: e,
                   });
                 }}
-                id="Categoria"
+                id="Estado"
               >
                 <SelectTrigger className="">
-                  <SelectValue placeholder="Define categoría del producto" />
+                  <SelectValue placeholder="Define estado del producto" />
                 </SelectTrigger>
                 <SelectContent>
                   {[{ label: "Activo" }, { label: "Inactivo" }].map(
@@ -446,20 +550,7 @@ const ModalProducto = ({
                 </SelectContent>
               </Select>
             </div>
-            <div className="space-y-2">
-              <Label htmlFor="PCSCaja" className="">
-                PCS CAJA
-              </Label>
-              <Input
-                id="PCSCaja"
-                name="PCSCaja"
-                className="w-full text-gray-900"
-                onChange={HandlerChange}
-                defaultValue={OpenModalProducto?.InfoEditar?.PCSCaja}
-                autoComplete="off"
-                type="text"
-              />
-            </div>
+
             <div className="space-y-2">
               <Label htmlFor="ITEM" className="">
                 ITEM
@@ -486,167 +577,30 @@ const ModalProducto = ({
               />
             </div>
 
-            {/* <div className="w-full mx-auto lg:col-span-2">
-              <div className="text-center">
-                <h1 className="text-3xl font-bold">Variantes </h1>
-                <div className="mt-4 flex">
-                  <input
-                    className="w-full border-b-2 border-gray-500 text-black px-2"
-                    type="text"
-                    placeholder="Ingresa la opción ?"
-                    onChange={(e) => {
-                      setInputValues({
-                        ...InputValues,
-                        TextoOpcion: e.target.value,
-                      });
-                    }}
-                    value={InputValues?.TextoOpcion}
-                  />
-                  <button
-                    type="submit"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      if (!InputValues?.TextoOpcion) return;
-
-                      setInputValues({
-                        ...InputValues,
-                        Variantes: [
-                          ...InputValues?.Variantes,
-                          {
-                            id: InputValues?.Variantes.length + 1,
-                            Nombre: InputValues?.TextoOpcion,
-                          },
-                        ],
-                        TextoOpcion: "",
-                      });
-                    }}
-                    className="ml-2 border-2 border-green-500 p-2 text-green-500 hover:text-white hover:bg-green-500 rounded-lg flex"
-                  >
-                    <svg
-                      className="h-6 w-6"
-                      width={24}
-                      height={24}
-                      viewBox="0 0 24 24"
-                      strokeWidth={2}
-                      stroke="currentColor"
-                      fill="none"
-                      strokeLinecap="round"
-                      strokeLinejoin="round"
-                    >
-                      {" "}
-                      <path stroke="none" d="M0 0h24v24H0z" />{" "}
-                      <circle cx={12} cy={12} r={9} />{" "}
-                      <line x1={9} y1={12} x2={15} y2={12} />{" "}
-                      <line x1={12} y1={9} x2={12} y2={15} />
-                    </svg>
-                    <span>Add</span>
-                  </button>
-                </div>
-              </div>
-              <div className="mt-4 ">
-                <ul className="grid lg:grid-cols-2 gap-3">
-                  {InputValues?.Variantes?.map((opcion, key) => (
-                    <li key={key} className="p-2 rounded-lg">
-                      <div className="flex flex-col align-middle justify-between border border-gray-300  rounded-md">
-                        <div className="p-2">
-                          <p className="text-lg text-black capitalize">
-                            {opcion?.Nombre || ""}
-                          </p>
-                          <div className="pt-2">
-                            <FileUploaderProductos
-                              setInputValues={setInputValues}
-                              index={key}
-                              InputValues={InputValues}
-                              opcion={opcion}
-                            />
-                          </div>
-                        </div>
-                        <div className="flex justify-center items-center gap-x-2 pb-2">
-                          <button
-                            onClick={(e) => {
-                              e.preventDefault();
-                              setInputValues({
-                                ...InputValues,
-                                Variantes: InputValues?.Variantes.filter(
-                                  (item, index) => index !== key
-                                ),
-                              });
-                            }}
-                            className="flex text-red-500 border-2 border-red-500 p-2 rounded-lg"
-                          >
-                            <svg
-                              className="h-6 w-6 text-red-500"
-                              viewBox="0 0 24 24"
-                              fill="none"
-                              stroke="currentColor"
-                              strokeWidth={2}
-                              strokeLinecap="round"
-                              strokeLinejoin="round"
-                            >
-                              {" "}
-                              <circle cx={12} cy={12} r={10} />{" "}
-                              <line x1={15} y1={9} x2={9} y2={15} />{" "}
-                              <line x1={9} y1={9} x2={15} y2={15} />
-                            </svg>
-                            <span>Eliminar Variante</span>
-                          </button>
-                        </div>
-                      </div>
-                    </li>
-                  ))}
-                </ul>
-              </div>
-            </div> */}
-
-            {/* <div>
-              {OpenModalProducto?.InfoEditar?.FichaTecnica?.name && (
-                <div className="flex flex-col">
-                  <Label htmlFor="FichaTecnica" className="">
-                    Ficha Tecnica
-                  </Label>
-
-                  <a
-                    href={OpenModalProducto?.InfoEditar?.FichaTecnica?.URLPDf}
-                    target="_blank"
-                    className="text-blue-500 flex "
-                  >
-                    <FileIcon className="h-6 w-6 text-blue-500" />
-                    {OpenModalProducto?.InfoEditar?.FichaTecnica?.name}
-                  </a>
-                </div>
-              )}
-            </div> */}
-
-            {/* <UploadPDFFichaTecnica FilePDF={FilePDF} setFilePDF={setFilePDF} /> */}
-
             <div className="lg:col-span-2">
               <Label htmlFor="ContenidoBLog" className="">
                 Contenido <span className="text-red-600">(*)</span>
               </Label>
-              <QuillNoSSRWrapper
-                id="ContenidoBLog"
-                modules={modules}
-                formats={formats}
-                theme="snow"
-                placeholder="Escriba aqui..."
-                onChange={(e) => {
+              <RichTextEditor
+                value={InputValues.Description}
+                onChange={(content) => {
                   setInputValues({
                     ...InputValues,
-                    Description: e,
+                    Description: content,
                   });
                 }}
-                className="text-black   min-h-32"
-                defaultValue={OpenModalProducto?.InfoEditar?.Description}
+                placeholder="Escriba aquí la descripción del producto..."
+                className="mt-2"
               />
             </div>
           </div>
 
           <Button
             disabled={Loading}
-            className="   disabled:cursor-not-allowed disabled:opacity-50"
+            className="disabled:cursor-not-allowed disabled:opacity-50"
             type="submit"
           >
-            Guardar{" "}
+            {Loading ? "Guardando..." : "Guardar"}
           </Button>
         </form>
       </DialogContent>

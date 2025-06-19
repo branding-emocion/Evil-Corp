@@ -28,9 +28,9 @@ export async function POST(request) {
       .join(""); // Join para unir todas las filas en un solo string
 
   const mailOptions = {
-    from: '"Contacto de REANDA" <notificacion@brandingemocion.net>', // El remitente del correo
-    to: `maneger@reanda.co`, // Enviar a la empresa y al cliente
-    subject: ` Formulario de Contacto de REANDA`, // Asunto del correo
+    from: '"Contacto de CORPORACIONRYL.COM" <notificacion@brandingemocion.net>', // El remitente del correo
+    to: `jhonned01@gmail.com`, // Enviar a la empresa y al cliente
+    subject: ` Formulario de Contacto de REANDCORPORACIONRYL.COM`, // Asunto del correo
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
         <h2 style="color: #4CAF50; text-align: center;">Formulario de Contacto</h2>

@@ -101,7 +101,7 @@ const DashboardLayout = ({ children }) => {
                   </div>
 
                   <p className="ml-2 text-sm text-wrap tracking-wide truncate uppercase">
-                    {claims?.Rol} - {user?.displayName || "No Disponible"}
+                    {claims?.Rol} - {user?.displayName || "Admin"}
                   </p>
                 </div>
               </li>

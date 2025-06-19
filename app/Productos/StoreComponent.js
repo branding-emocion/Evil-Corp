@@ -141,7 +141,7 @@ export default function StoreComponent({ products, categories }) {
                 <h3 className="font-bold text-lg">{product?.NombreProducto}</h3>
                 <div className="text-sm text-gray-600 mt-2 flex justify-between items-center gap-x-3 flex-wrap">
                   <p>Código: {product.ITEM || ""}</p>
-                  <p>Cantidad: {product.PCSCaja || ""}</p>
+                  {/* <p>Cantidad: {product.PCSCaja || ""}</p> */}
                 </div>
 
                 <div
