@@ -28,7 +28,7 @@ const Contacto = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative">
-        <div className="relative w-full h-[500px] z-[1] overflow-hidden bg-gradient-to-r from-orange-700 via-orange-600 to-red-600">
+        <div className="relative w-full h-[500px] z-[1] overflow-hidden bg-[#ff6900]">
           {/* Espacio para imagen de fondo */}
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="relative h-full flex items-center justify-center text-center px-4">

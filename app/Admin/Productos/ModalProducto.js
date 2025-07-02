@@ -9,7 +9,14 @@ import {
 } from "@/components/ui/dialog";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-
+import { Textarea } from "@/components/ui/textarea";
+import {
+  Select,
+  SelectContent,
+  SelectItem,
+  SelectTrigger,
+  SelectValue,
+} from "@/components/ui/select";
 import { useEffect, useState } from "react";
 import {
   getDownloadURL,
@@ -25,20 +32,12 @@ import {
   updateDoc,
 } from "firebase/firestore";
 import { db, storage } from "@/firebase/firebaseClient";
-import {
-  Select,
-  SelectContent,
-  SelectItem,
-  SelectTrigger,
-  SelectValue,
-} from "@/components/ui/select";
-
+import { Bold, Italic, List, ListOrdered, Link, ImageIcon } from "lucide-react";
 import FileUploaderGeneral from "./FileUploaderGeneral";
 import DeleteImagenes from "@/lib/DeleteImagenes";
 import DeletePdf from "@/lib/DeletePdf";
 import { useToast } from "@/hooks/use-toast";
-import { Textarea } from "@/components/ui/textarea";
-import { Bold, Italic, List, ListOrdered, Link, ImageIcon } from "lucide-react";
+import UploadPDFFichaTecnica from "./UploadPDFFichaTecnica";
 
 // Editor de texto rico personalizado y moderno
 const RichTextEditor = ({ value, onChange, placeholder, className }) => {
@@ -147,7 +146,7 @@ const RichTextEditor = ({ value, onChange, placeholder, className }) => {
   );
 };
 
-const ModalProducto = ({
+const ModalProductoEnhanced = ({
   OpenModalProducto,
   setOpenModalProducto,
   Categorias,
@@ -156,12 +155,13 @@ const ModalProducto = ({
     Variantes: OpenModalProducto?.InfoEditar?.Variantes || [],
     TextoOpcion: "",
     Description: OpenModalProducto?.InfoEditar?.Description || "",
+    Precio: OpenModalProducto?.InfoEditar?.Precio || "",
   });
   const [Loading, setLoading] = useState(false);
   const { toast } = useToast();
   const [Marcas, setMarcas] = useState([]);
   const [files, setFiles] = useState([]);
-  const [FilePDF, setFilePDF] = useState([]);
+  const [FilePDF, setFilePDF] = useState(null);
 
   useEffect(() => {
     if (!Object.keys(OpenModalProducto?.InfoEditar).length > 0) {
@@ -177,15 +177,26 @@ const ModalProducto = ({
     );
   }, [OpenModalProducto?.InfoEditar]);
 
-  // Actualizar descripción cuando cambie la info a editar
+  // Actualizar valores cuando cambie la info a editar
   useEffect(() => {
-    if (OpenModalProducto?.InfoEditar?.Description) {
+    if (OpenModalProducto?.InfoEditar) {
       setInputValues((prev) => ({
         ...prev,
-        Description: OpenModalProducto.InfoEditar.Description,
+        Description: OpenModalProducto.InfoEditar.Description || "",
+        Precio: OpenModalProducto.InfoEditar.Precio || "",
+        Variantes: OpenModalProducto.InfoEditar.Variantes || [],
       }));
+
+      // Si hay ficha técnica existente, mostrarla
+      if (OpenModalProducto.InfoEditar.FichaTecnica) {
+        setFilePDF({
+          name: OpenModalProducto.InfoEditar.FichaTecnica.name,
+          existing: true,
+          url: OpenModalProducto.InfoEditar.FichaTecnica.URLPDf,
+        });
+      }
     }
-  }, [OpenModalProducto?.InfoEditar?.Description]);
+  }, [OpenModalProducto?.InfoEditar]);
 
   const closeOpenModalProducto = () => {
     setOpenModalProducto({
@@ -196,7 +207,9 @@ const ModalProducto = ({
       Variantes: [],
       TextoOpcion: "",
       Description: "",
+      Precio: "",
     });
+    setFilePDF(null);
   };
 
   const HandlerChange = (e) => {
@@ -248,36 +261,42 @@ const ModalProducto = ({
     };
   };
 
-  const handleUploadPdf = async (NombreProducto, name, docRefCol) => {
-    const storagePath = `files/${NombreProducto}/${name}`;
+  const handleUploadPdf = async (NombreProducto, file, docRefCol) => {
+    // Si es un archivo existente, no hacer nada
+    if (file.existing) {
+      return;
+    }
+
+    const storagePath = `files/${NombreProducto}/${file.name}`;
     const storageRef = ref(storage, storagePath);
-    const uploadTask = uploadBytesResumable(storageRef, FilePDF);
+    const uploadTask = uploadBytesResumable(storageRef, file);
 
-    const urlPrd = "";
-    uploadTask.on(
-      "state_changed",
-      (snap) => {
-        // Progreso de carga
-      },
-      (err) => {
-        console.error(err);
-        setLoading(false);
-      },
-      async () => {
-        const url = await getDownloadURL(storageRef);
-
-        await updateDoc(doc(db, docRefCol), {
-          FichaTecnica:
-            {
-              name: FilePDF.name,
-              URLPDf: url,
-            } || {},
-        });
-        setFilePDF(null);
-      }
-    );
-
-    return urlPrd;
+    return new Promise((resolve, reject) => {
+      uploadTask.on(
+        "state_changed",
+        (snap) => {
+          // Progreso de carga
+        },
+        (err) => {
+          console.error(err);
+          reject(err);
+        },
+        async () => {
+          try {
+            const url = await getDownloadURL(storageRef);
+            await updateDoc(doc(db, docRefCol), {
+              FichaTecnica: {
+                name: file.name,
+                URLPDf: url,
+              },
+            });
+            resolve(url);
+          } catch (error) {
+            reject(error);
+          }
+        }
+      );
+    });
   };
 
   const HandlerSubmit = async (e) => {
@@ -292,27 +311,34 @@ const ModalProducto = ({
           `${OpenModalProducto?.InfoEditar?.id}`
         );
 
+        // Actualizar datos básicos del producto
         if (Object.keys(InputValues).length > 2) {
           await updateDoc(UpdateRef, {
             ...InputValues,
           });
         }
 
-        if (FilePDF.name) {
+        // Manejar subida de PDF si hay uno nuevo
+        if (FilePDF && !FilePDF.existing) {
           const NombreAnt =
             OpenModalProducto?.InfoEditar?.NombreProducto?.replace(/\s+/g, "_");
           const NombreCarpeta =
             InputValues?.NombreProducto?.replace(/\s+/g, "_") ||
             OpenModalProducto?.InfoEditar?.NombreProducto?.replace(/\s+/g, "_");
 
-          await DeletePdf(`files/${NombreAnt}`);
+          // Eliminar PDF anterior si existe
+          if (OpenModalProducto?.InfoEditar?.FichaTecnica) {
+            await DeletePdf(`files/${NombreAnt}`);
+          }
+
           await handleUploadPdf(
             NombreCarpeta,
-            FilePDF.name,
+            FilePDF,
             `Productos/${OpenModalProducto?.InfoEditar?.id}`
           );
         }
 
+        // Manejar imágenes generales
         if (files?.length > 0) {
           const NombreArchivo =
             OpenModalProducto?.InfoEditar?.NombreProducto?.replace(
@@ -330,16 +356,12 @@ const ModalProducto = ({
             "Productos/ImagenesGenerales"
           );
 
-          const UpdateRef = doc(
-            db,
-            "Productos",
-            `${OpenModalProducto?.InfoEditar?.id}`
-          );
           await updateDoc(UpdateRef, {
             ImagenesGenerales: ImagenesGenerales || [],
           });
         }
 
+        // Manejar variantes
         if (InputValues?.Variantes?.length > 0) {
           const FilesUpload = [];
 
@@ -380,6 +402,7 @@ const ModalProducto = ({
         closeOpenModalProducto();
         return;
       } else {
+        // Crear nuevo producto
         if (Object.keys(InputValues).length > 2) {
           const FilesUpload = [];
 
@@ -391,12 +414,10 @@ const ModalProducto = ({
                 );
 
                 if (ImagenesSubi) {
-                  const NombreCarpeta =
-                    InputValues?.NombreProducto?.replace(/\s+/g, "_") ||
-                    OpenModalProducto?.InfoEditar?.NombreProducto?.replace(
-                      /\s+/g,
-                      "_"
-                    );
+                  const NombreCarpeta = InputValues?.NombreProducto?.replace(
+                    /\s+/g,
+                    "_"
+                  );
 
                   const ImagesUrl = await uploadImages(
                     ImagenesSubi,
@@ -419,14 +440,16 @@ const ModalProducto = ({
             Variantes: FilesUpload || InputValues?.Variantes || [],
           });
 
-          if (FilePDF.name) {
+          // Subir PDF si existe
+          if (FilePDF && !FilePDF.existing) {
             await handleUploadPdf(
               InputValues?.NombreProducto,
-              FilePDF.name,
+              FilePDF,
               `Productos/${docRef?.id}`
             );
           }
 
+          // Subir imágenes generales
           if (files?.length > 0) {
             const NombreCarpeta = InputValues?.NombreProducto?.replace(
               /\s+/g,
@@ -446,11 +469,17 @@ const ModalProducto = ({
           closeOpenModalProducto();
         }
       }
+
+      toast({
+        title: "Éxito",
+        description: "Producto guardado correctamente",
+      });
     } catch (err) {
       console.error("Error:", err);
       toast({
         title: err?.error?.errorInfo?.code || "Internal Server Error",
         description: err?.error?.errorInfo?.message || "Contacte con soporte",
+        variant: "destructive",
       });
     } finally {
       setLoading(false);
@@ -487,6 +516,22 @@ const ModalProducto = ({
                 required
                 autoComplete="off"
                 autoFocus
+                type="text"
+              />
+            </div>
+
+            <div className="space-y-2">
+              <Label htmlFor="Precio" className="">
+                Precio (Opcional)
+              </Label>
+              <Input
+                id="Precio"
+                name="Precio"
+                className="w-full text-gray-900"
+                onChange={HandlerChange}
+                value={InputValues.Precio}
+                placeholder="Ej: $99.99"
+                autoComplete="off"
                 type="text"
               />
             </div>
@@ -566,6 +611,21 @@ const ModalProducto = ({
               />
             </div>
 
+            <div className="space-y-2">
+              <Label htmlFor="FichaTecnica" className="">
+                Ficha Técnica (Opcional)
+              </Label>
+              <UploadPDFFichaTecnica
+                FilePDF={FilePDF}
+                setFilePDF={setFilePDF}
+              />
+              {FilePDF?.existing && (
+                <div className="text-sm text-green-600 mt-2">
+                  ✓ Archivo actual: {FilePDF.name}
+                </div>
+              )}
+            </div>
+
             <div className="lg:col-span-2">
               <Label htmlFor="Imagenes">
                 Imagen Principal <span className="text-red-600"> (*)</span>
@@ -608,4 +668,4 @@ const ModalProducto = ({
   );
 };
 
-export default ModalProducto;
+export default ModalProductoEnhanced;

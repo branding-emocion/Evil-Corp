@@ -61,8 +61,10 @@ export default function StoreComponent({ products, categories }) {
           <ul className="space-y-2 uppercase">
             <li>
               <Button
-                variant={selectedCategory === "Todos" ? "default" : "ghost"}
-                className="w-full justify-start"
+                variant={
+                  selectedCategory === "Todos" ? "default" : "bg-[#ff6900]"
+                }
+                className="w-full justify-start hover:bg-[#ff6900]"
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedCategory("Todos");
@@ -114,7 +116,7 @@ export default function StoreComponent({ products, categories }) {
             {currentProducts.map((product) => (
               <div
                 key={product.id}
-                className="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer"
+                className="border rounded-lg p-4 hover:shadow-lg transition-shadow cursor-pointer "
                 onClick={(e) => {
                   e.preventDefault();
                   setShowModalProductos({
@@ -144,12 +146,12 @@ export default function StoreComponent({ products, categories }) {
                   {/* <p>Cantidad: {product.PCSCaja || ""}</p> */}
                 </div>
 
-                <div
+                {/* <div
                   className="line-clamp-3 mt-1 text-sm text-gray-600 "
                   dangerouslySetInnerHTML={{
                     __html: product?.Description || "",
                   }}
-                />
+                /> */}
               </div>
             ))}
           </div>

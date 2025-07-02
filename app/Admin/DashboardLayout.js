@@ -5,6 +5,7 @@ import useAuthState from "@/lib/useAuthState";
 import { auth, db } from "@/firebase/firebaseClient";
 import Link from "next/link";
 import {
+  ArrowRightToLineIcon,
   Beef,
   Bold,
   BrickWall,
@@ -65,6 +66,11 @@ const DashboardLayout = ({ children }) => {
       link: "/Admin/Usuarios",
       icon: <Users className="w-6 h-6 text-white" />,
       hidden: claims?.Rol?.includes("Admin") ? false : true,
+    },
+    {
+      name: "Carrousel",
+      link: "/Admin/BannerPrincipal",
+      icon: <ArrowRightToLineIcon className="w-6 h-6 text-white" />,
     },
     {
       name: "Categorias",

@@ -5,11 +5,6 @@ import { Toaster } from "@/components/ui/sonner";
 
 const inter = Inter({ subsets: ["latin"] });
 
-// export const metadata = {
-//   title: "R-CORPORACIÓN",
-//   description: "",
-// };
-
 export const metadata = {
   title: "Nosotros - R-CORPORACIÓN | Líderes en Maquinaria Industrial",
   description:

@@ -75,7 +75,7 @@ export default function NosotrosPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-gradient-to-r from-orange-700 via-orange-600 to-red-600 py-24">
+      <section className="relative bg-[#ff6900] py-24">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
