@@ -28,7 +28,7 @@ const Contacto = () => {
     <div className="min-h-screen bg-white">
       {/* Hero Section */}
       <section className="relative">
-        <div className="relative w-full h-[500px] z-[1] overflow-hidden bg-[#ff6900]">
+        <div className="relative w-full h-[500px] z-[1] overflow-hidden bg-[#e7b617]">
           {/* Espacio para imagen de fondo */}
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="relative h-full flex items-center justify-center text-center px-4">
@@ -85,13 +85,13 @@ const Contacto = () => {
                   <div className="space-y-2">
                     <a
                       href="tel:+51960040522"
-                      className="block text-gray-600 hover:text-orange-600 transition-colors"
+                      className="block text-gray-600 hover:text-[#e7b617] transition-colors"
                     >
                       960 040 522
                     </a>
                     <a
                       href="tel:+51967447382"
-                      className="block text-gray-600 hover:text-orange-600 transition-colors"
+                      className="block text-gray-600 hover:text-[#e7b617] transition-colors"
                     >
                       967 447 382
                     </a>
@@ -111,7 +111,7 @@ const Contacto = () => {
                   </h3>
                   <a
                     href="mailto:VENTAS@CORPORACIONRYL.COM"
-                    className="text-gray-600 hover:text-orange-600 transition-colors"
+                    className="text-gray-600 hover:text-[#e7b617] transition-colors"
                   >
                     VENTAS@CORPORACIONRYL.COM
                   </a>
@@ -148,7 +148,7 @@ const Contacto = () => {
               transition={{ delay: 0.4 }}
               className="lg:col-span-2"
             >
-              <Card className="h-full bg-green-800 text-white shadow-xl border-0">
+              <Card className="h-full bg-[#10603e] text-white shadow-xl border-0">
                 <CardContent className="p-8">
                   <h2 className="text-3xl font-bold mb-8">
                     Información de Contacto
@@ -412,7 +412,7 @@ const Contacto = () => {
 
                     <Button
                       type="submit"
-                      className="w-full h-12 bg-orange-500 hover:bg-orange-600 text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:cursor-pointer"
+                      className="w-full h-12 bg-orange-500 hover:bg-[#e7b617] text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:cursor-pointer"
                       disabled={IsLoading}
                     >
                       {IsLoading ? (

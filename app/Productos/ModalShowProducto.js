@@ -174,7 +174,7 @@ const ModalShowProducto = ({
                   <Building className="h-3 w-3" />
                   {categoriaProducto?.NombreCategoria || "Sin categoría"}
                 </Badge>
-                <Badge className="flex items-center gap-1 px-3 py-1 bg-green-100 text-green-800 hover:bg-green-200">
+                <Badge className="flex items-center gap-1 px-3 py-1 bg-green-100 text-[#10603e] hover:bg-green-200">
                   <CheckCircle className="h-3 w-3" />
                   Disponible
                 </Badge>
@@ -191,7 +191,7 @@ const ModalShowProducto = ({
                       <p className="text-sm text-green-700 font-medium">
                         Precio
                       </p>
-                      <p className="text-xl font-bold text-green-800">
+                      <p className="text-xl font-bold text-[#10603e]">
                         {product.Precio}
                       </p>
                     </div>
@@ -329,7 +329,7 @@ const ModalShowProducto = ({
                 <div className="bg-green-50 border border-green-200 p-4 rounded-lg">
                   <div className="flex items-center gap-2 mb-3">
                     <CheckCircle className="h-5 w-5 text-green-600" />
-                    <span className="font-semibold text-green-800">
+                    <span className="font-semibold text-[#10603e]">
                       Garantía de servicio
                     </span>
                   </div>

@@ -75,7 +75,7 @@ export default function NosotrosPage() {
   return (
     <main className="bg-white">
       {/* Hero Section */}
-      <section className="relative bg-[#ff6900] py-24">
+      <section className="relative bg-[#e7b617] py-24">
         <div className="absolute inset-0 bg-black/30"></div>
         <div className="container mx-auto px-4 relative z-10">
           <motion.div
@@ -119,7 +119,7 @@ export default function NosotrosPage() {
                 </div>
 
                 {/* Badge de experiencia */}
-                <div className="absolute -bottom-8 -right-8 bg-green-800 text-white p-6 rounded-2xl shadow-xl">
+                <div className="absolute -bottom-8 -right-8 bg-[#10603e] text-white p-6 rounded-2xl shadow-xl">
                   <div className="text-center">
                     <p className="text-3xl font-bold">+6</p>
                     <p className="text-sm font-medium">Años de</p>
@@ -129,7 +129,7 @@ export default function NosotrosPage() {
 
                 {/* Elementos decorativos */}
                 <div className="absolute -top-4 -left-4 w-24 h-24 bg-orange-500 rounded-full opacity-20"></div>
-                <div className="absolute top-1/2 -right-6 w-16 h-16 bg-green-800 rounded-full opacity-30"></div>
+                <div className="absolute top-1/2 -right-6 w-16 h-16 bg-[#10603e] rounded-full opacity-30"></div>
               </motion.div>
 
               {/* Contenido */}
@@ -147,7 +147,7 @@ export default function NosotrosPage() {
                     <strong className="text-gray-800">empresa líder</strong> con
                     más de 6 años de experiencia en el mercado peruano, lo que
                     nos convierte en un{" "}
-                    <strong className="text-orange-600">
+                    <strong className="text-[#e7b617]">
                       socio estratégico de confianza
                     </strong>{" "}
                     en el abastecimiento de maquinarias y herramientas para la
@@ -169,7 +169,7 @@ export default function NosotrosPage() {
                 <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                   <div className="flex items-start space-x-4">
                     <div className="w-12 h-12 bg-orange-100 rounded-lg flex items-center justify-center flex-shrink-0">
-                      <CheckCircle className="w-6 h-6 text-orange-600" />
+                      <CheckCircle className="w-6 h-6 text-[#e7b617]" />
                     </div>
                     <div>
                       <h4 className="font-bold text-gray-800 mb-1">
@@ -202,7 +202,7 @@ export default function NosotrosPage() {
       </section>
 
       {/* Estadísticas mejoradas */}
-      <section className="py-16 bg-gradient-to-r from-green-800 to-green-900 text-white">
+      <section className="py-16 bg-gradient-to-r from-[#10603e] to-green-900 text-white">
         <div className="container mx-auto px-4">
           <motion.div
             className="grid grid-cols-2 md:grid-cols-4 gap-8"
@@ -218,7 +218,7 @@ export default function NosotrosPage() {
                 className="text-center group hover:scale-105 transition-transform duration-300"
               >
                 <div className="bg-white/10 rounded-2xl p-6 backdrop-blur-sm">
-                  <div className="text-4xl md:text-5xl font-bold text-orange-400 mb-2 group-hover:text-orange-300 transition-colors">
+                  <div className="text-4xl md:text-5xl font-bold text-orange-400 mb-2 group-hover:text-[#e7b617] transition-colors">
                     {stat.numero}
                   </div>
                   <p className="text-lg font-semibold mb-1">{stat.texto}</p>
@@ -257,7 +257,7 @@ export default function NosotrosPage() {
                 className="group hover:scale-105 transition-all duration-300"
               >
                 <div className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 h-full">
-                  <div className="w-20 h-20 bg-gradient-to-br from-green-800 to-green-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#10603e] to-green-600 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
                     <Target className="w-10 h-10 text-white" />
                   </div>
                   <h3 className="text-3xl font-bold text-gray-800 mb-6">
@@ -325,7 +325,7 @@ export default function NosotrosPage() {
               >
                 <div className="relative mb-8">
                   <div className="w-32 h-32 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
-                    <Award className="w-16 h-16 text-orange-600" />
+                    <Award className="w-16 h-16 text-[#e7b617]" />
                   </div>
                   <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 rounded-full"></div>
                 </div>
@@ -412,7 +412,7 @@ export default function NosotrosPage() {
                   className="bg-white p-8 rounded-2xl shadow-lg hover:shadow-xl transition-all duration-300 hover:-translate-y-2"
                 >
                   <div className="w-16 h-16 bg-orange-100 rounded-xl flex items-center justify-center mb-6">
-                    <servicio.icon className="w-8 h-8 text-orange-600" />
+                    <servicio.icon className="w-8 h-8 text-[#e7b617]" />
                   </div>
                   <h3 className="text-xl font-bold text-gray-800 mb-4">
                     {servicio.titulo}

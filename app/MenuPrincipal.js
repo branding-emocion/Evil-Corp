@@ -6,6 +6,7 @@ import { usePathname } from "next/navigation";
 import { Button } from "@/components/ui/button";
 import { Smartphone, Phone, Mail } from "lucide-react";
 import { motion } from "framer-motion";
+import Image from "next/image";
 
 const MenuPrincipal = () => {
   const [isOpen, setIsOpen] = useState(false);
@@ -50,7 +51,7 @@ const MenuPrincipal = () => {
           <div className="flex items-center space-x-6">
             <a
               href="mailto:VENTAS@CORPORACIONRYL.COM"
-              className="flex items-center space-x-2 hover:text-orange-300 transition-colors"
+              className="flex items-center space-x-2 hover:text-[#e7b617] transition-colors"
             >
               <Mail className="w-4 h-4" />
               <span>VENTAS@CORPORACIONRYL.COM</span>
@@ -58,7 +59,7 @@ const MenuPrincipal = () => {
             <div className="flex items-center space-x-4">
               <a
                 href="tel:+51960040522"
-                className="flex items-center space-x-1 hover:text-orange-300 transition-colors"
+                className="flex items-center space-x-1 hover:text-[#e7b617] transition-colors"
               >
                 <Phone className="w-4 h-4" />
                 <span>960 040 522</span>
@@ -66,13 +67,13 @@ const MenuPrincipal = () => {
               <span className="text-gray-300">|</span>
               <a
                 href="tel:+51967447382"
-                className="hover:text-orange-300 transition-colors"
+                className="hover:text-[#e7b617] transition-colors"
               >
                 967 447 382
               </a>
             </div>
           </div>
-          <div className="text-orange-300 font-medium">
+          <div className="text-[#e7b617] font-medium">
             GARANTÍA • CALIDAD • EFICIENCIA
           </div>
         </div>
@@ -84,23 +85,20 @@ const MenuPrincipal = () => {
         animate="visible"
         variants={fadeInVariants}
         transition={{ duration: 0.8, delay: 0.4 }}
-        className="sticky z-50 top-0 bg-green-800 text-white shadow-lg"
+        className="sticky z-50 top-0 bg-[#10603e] text-white shadow-lg"
       >
         <div className="container mx-auto px-4">
           <div className="flex justify-between items-center py-3">
             {/* Logo */}
             <Link className="flex items-center" href="/" title="Ir a inicio">
-              <div className="flex items-center space-x-3">
-                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">R&L</span>
-                </div>
-                <div className="hidden md:block">
-                  <h1 className="text-xl font-bold text-white">
-                    CORPORACIÓN R&L
-                  </h1>
-                  <p className="text-xs text-orange-300">
-                    Maquinaria Industrial
-                  </p>
+              <div className="flex items-center  ">
+                <div className="w-[200px]  h-[51px] relative ">
+                  <Image
+                    src="/logoBlanco1.png"
+                    alt="Logo"
+                    fill
+                    className="object-cover"
+                  />
                 </div>
               </div>
             </Link>
@@ -140,16 +138,16 @@ const MenuPrincipal = () => {
             {/* Botón de contacto y teléfono - Desktop */}
             <div className="hidden lg:flex items-center space-x-4">
               <Link href="/Contacto">
-                <Button className="bg-orange-500 hover:bg-orange-600 text-white font-semibold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105">
+                <Button className="bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold px-6 py-2 rounded-lg transition-all duration-300 hover:scale-105">
                   Cotizar Ahora
                 </Button>
               </Link>
 
               <a
                 href="tel:+51960040522"
-                className="flex items-center space-x-2 text-orange-300 hover:text-orange-200 transition-colors"
+                className="flex items-center space-x-2 text-[#e7b617] hover:text-orange-200 transition-colors"
               >
-                <div className="bg-orange-500 p-2 rounded-lg">
+                <div className="bg-[#e7b617] p-2 rounded-lg">
                   <Smartphone className="w-5 h-5 text-white" />
                 </div>
                 <div className="text-right">
@@ -226,7 +224,7 @@ const MenuPrincipal = () => {
               {/* Información de contacto móvil */}
               <div className="pt-4 border-t border-green-700 space-y-3">
                 <Link href="/Contacto" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full bg-orange-500 hover:bg-orange-600 text-white font-semibold py-3 rounded-lg">
+                  <Button className="w-full bg-orange-500 hover:bg-[#e7b617] text-white font-semibold py-3 rounded-lg">
                     Cotizar Ahora
                   </Button>
                 </Link>
@@ -234,14 +232,14 @@ const MenuPrincipal = () => {
                 <div className="flex justify-between">
                   <a
                     href="tel:+51960040522"
-                    className="flex items-center space-x-2 text-orange-300"
+                    className="flex items-center space-x-2 text-[#e7b617]"
                   >
                     <Phone className="w-4 h-4" />
                     <span className="text-sm">960 040 522</span>
                   </a>
                   <a
                     href="tel:+51967447382"
-                    className="flex items-center space-x-2 text-orange-300"
+                    className="flex items-center space-x-2 text-[#e7b617]"
                   >
                     <Phone className="w-4 h-4" />
                     <span className="text-sm">967 447 382</span>

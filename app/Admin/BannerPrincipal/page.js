@@ -29,26 +29,19 @@ import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { useToast } from "@/hooks/use-toast";
 import BannerPrincipal from "./BannerPrincipal";
 
-// Simulación de Firebase - reemplaza con tu configuración real
-const mockFirebaseService = {
-  async getCarouselItems() {
-    const stored = localStorage.getItem("carouselItems");
-    return stored ? JSON.parse(stored) : [];
-  },
-
-  async saveCarouselItems(items) {
-    localStorage.setItem("carouselItems", JSON.stringify(items));
-  },
-
-  async uploadImage(file) {
-    // Simula upload - reemplaza con Firebase Storage
-    return new Promise((resolve) => {
-      const reader = new FileReader();
-      reader.onload = () => resolve(reader.result);
-      reader.readAsDataURL(file);
-    });
-  },
-};
+// Firebase imports
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  deleteDoc,
+  doc,
+  orderBy,
+  query,
+  onSnapshot,
+} from "firebase/firestore";
+import { ref, uploadBytes, getDownloadURL } from "firebase/storage";
+import { db, storage } from "@/firebase/firebaseClient";
 
 const CarouselAdmin = () => {
   const [items, setItems] = useState([]);
@@ -57,6 +50,7 @@ const CarouselAdmin = () => {
   const [isDialogOpen, setIsDialogOpen] = useState(false);
   const [previewMode, setPreviewMode] = useState(false);
   const [draggedItem, setDraggedItem] = useState(null);
+  const [uploading, setUploading] = useState(false);
   const { toast } = useToast();
 
   // Form state
@@ -71,59 +65,70 @@ const CarouselAdmin = () => {
     secondaryButtonLink: "",
   });
 
+  // Cargar elementos del carrusel desde Firebase
   useEffect(() => {
-    loadItems();
-  }, []);
+    const carouselRef = collection(db, "carousel");
+    const q = query(carouselRef, orderBy("order", "asc"));
 
-  const loadItems = async () => {
-    try {
-      const loadedItems = await mockFirebaseService.getCarouselItems();
-      setItems(loadedItems.sort((a, b) => a.order - b.order));
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "No se pudieron cargar los elementos",
-        variant: "destructive",
-      });
-    } finally {
-      setIsLoading(false);
-    }
-  };
+    const unsubscribe = onSnapshot(
+      q,
+      (snapshot) => {
+        const carouselItems = snapshot.docs.map((doc) => ({
+          id: doc.id,
+          ...doc.data(),
+        }));
+        setItems(carouselItems);
+        setIsLoading(false);
+      },
+      (error) => {
+        console.error("Error loading carousel items:", error);
+        toast({
+          title: "Error",
+          description: "No se pudieron cargar los elementos del carrusel",
+          variant: "destructive",
+        });
+        setIsLoading(false);
+      }
+    );
 
-  const saveItems = async (newItems) => {
-    try {
-      await mockFirebaseService.saveCarouselItems(newItems);
-      setItems(newItems);
-      toast({
-        title: "Éxito",
-        description: "Elementos guardados correctamente",
-      });
-    } catch (error) {
-      toast({
-        title: "Error",
-        description: "No se pudieron guardar los elementos",
-        variant: "destructive",
-      });
-    }
-  };
+    return () => unsubscribe();
+  }, [toast]);
 
+  // Subir imagen a Firebase Storage
   const handleImageUpload = async (file) => {
+    if (!file) return;
+
+    setUploading(true);
     try {
-      const imageUrl = await mockFirebaseService.uploadImage(file);
-      setFormData((prev) => ({ ...prev, imageUrl, videoUrl: "" }));
+      const fileName = `carousel/${Date.now()}-${file.name}`;
+      const storageRef = ref(storage, fileName);
+
+      const snapshot = await uploadBytes(storageRef, file);
+      const downloadURL = await getDownloadURL(snapshot.ref);
+
+      setFormData((prev) => ({
+        ...prev,
+        imageUrl: downloadURL,
+        videoUrl: "",
+      }));
+
       toast({
         title: "Éxito",
         description: "Imagen subida correctamente",
       });
     } catch (error) {
+      console.error("Error uploading image:", error);
       toast({
         title: "Error",
         description: "No se pudo subir la imagen",
         variant: "destructive",
       });
+    } finally {
+      setUploading(false);
     }
   };
 
+  // Guardar elemento en Firebase
   const handleSubmit = async () => {
     if (!formData.title.trim()) {
       toast({
@@ -134,80 +139,137 @@ const CarouselAdmin = () => {
       return;
     }
 
-    const newItem = {
-      id: editingItem?.id || Date.now().toString(),
-      title: formData.title.trim(),
-      description: formData.description?.trim() || "",
-      imageUrl: formData.imageUrl?.trim() || "",
-      videoUrl: formData.videoUrl?.trim() || "",
-      buttonText: formData.buttonText?.trim() || "",
-      buttonLink: formData.buttonLink?.trim() || "",
-      secondaryButtonText: formData.secondaryButtonText?.trim() || "",
-      secondaryButtonLink: formData.secondaryButtonLink?.trim() || "",
-      order: editingItem?.order ?? items.length,
-      createdAt: editingItem?.createdAt || new Date().toISOString(),
-      updatedAt: new Date().toISOString(),
-    };
+    try {
+      const itemData = {
+        title: formData.title.trim(),
+        description: formData.description?.trim() || "",
+        imageUrl: formData.imageUrl?.trim() || "",
+        videoUrl: formData.videoUrl?.trim() || "",
+        buttonText: formData.buttonText?.trim() || "",
+        buttonLink: formData.buttonLink?.trim() || "",
+        secondaryButtonText: formData.secondaryButtonText?.trim() || "",
+        secondaryButtonLink: formData.secondaryButtonLink?.trim() || "",
+        updatedAt: new Date(),
+      };
 
-    let newItems;
-    if (editingItem) {
-      newItems = items.map((item) =>
-        item.id === editingItem.id ? newItem : item
-      );
-    } else {
-      newItems = [...items, newItem];
+      if (editingItem) {
+        // Actualizar elemento existente
+        const docRef = doc(db, "carousel", editingItem.id);
+        await updateDoc(docRef, itemData);
+
+        toast({
+          title: "Éxito",
+          description: "Elemento actualizado correctamente",
+        });
+      } else {
+        // Crear nuevo elemento
+        itemData.order = items.length;
+        itemData.createdAt = new Date();
+
+        await addDoc(collection(db, "carousel"), itemData);
+
+        toast({
+          title: "Éxito",
+          description: "Elemento creado correctamente",
+        });
+      }
+
+      resetForm();
+      setIsDialogOpen(false);
+    } catch (error) {
+      console.error("Error saving item:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo guardar el elemento",
+        variant: "destructive",
+      });
     }
-
-    await saveItems(newItems);
-    resetForm();
-    setIsDialogOpen(false);
   };
 
+  // Eliminar elemento de Firebase
   const handleDelete = async (id) => {
     if (
-      window.confirm("¿Estás seguro de que quieres eliminar este elemento?")
+      !window.confirm("¿Estás seguro de que quieres eliminar este elemento?")
     ) {
-      const newItems = items.filter((item) => item.id !== id);
-      // Reordenar los elementos restantes
-      const reorderedItems = newItems.map((item, index) => ({
-        ...item,
-        order: index,
-      }));
-      await saveItems(reorderedItems);
+      return;
+    }
+
+    try {
+      await deleteDoc(doc(db, "carousel", id));
+
+      // Reordenar elementos restantes
+      const remainingItems = items.filter((item) => item.id !== id);
+      const updatePromises = remainingItems.map((item, index) =>
+        updateDoc(doc(db, "carousel", item.id), { order: index })
+      );
+      await Promise.all(updatePromises);
+
+      toast({
+        title: "Éxito",
+        description: "Elemento eliminado correctamente",
+      });
+    } catch (error) {
+      console.error("Error deleting item:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo eliminar el elemento",
+        variant: "destructive",
+      });
     }
   };
 
-  const handleDragStart = (e, item) => {
-    setDraggedItem(item);
-    e.dataTransfer.effectAllowed = "move";
+  // Mover elemento hacia arriba
+  const moveItemUp = async (index) => {
+    if (index === 0) return;
+
+    try {
+      const currentItem = items[index];
+      const previousItem = items[index - 1];
+
+      await Promise.all([
+        updateDoc(doc(db, "carousel", currentItem.id), { order: index - 1 }),
+        updateDoc(doc(db, "carousel", previousItem.id), { order: index }),
+      ]);
+
+      toast({
+        title: "Éxito",
+        description: "Orden actualizado correctamente",
+      });
+    } catch (error) {
+      console.error("Error reordering items:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo cambiar el orden",
+        variant: "destructive",
+      });
+    }
   };
 
-  const handleDragOver = (e) => {
-    e.preventDefault();
-    e.dataTransfer.dropEffect = "move";
-  };
+  // Mover elemento hacia abajo
+  const moveItemDown = async (index) => {
+    if (index === items.length - 1) return;
 
-  const handleDrop = async (e, targetItem) => {
-    e.preventDefault();
+    try {
+      const currentItem = items[index];
+      const nextItem = items[index + 1];
 
-    if (!draggedItem || draggedItem.id === targetItem.id) return;
+      await Promise.all([
+        updateDoc(doc(db, "carousel", currentItem.id), { order: index + 1 }),
+        updateDoc(doc(db, "carousel", nextItem.id), { order: index }),
+      ]);
 
-    const dragIndex = items.findIndex((item) => item.id === draggedItem.id);
-    const hoverIndex = items.findIndex((item) => item.id === targetItem.id);
-
-    const newItems = [...items];
-    const draggedElement = newItems[dragIndex];
-    newItems.splice(dragIndex, 1);
-    newItems.splice(hoverIndex, 0, draggedElement);
-
-    // Update order values
-    const reorderedItems = newItems.map((item, index) => ({
-      ...item,
-      order: index,
-    }));
-
-    await saveItems(reorderedItems);
-    setDraggedItem(null);
+      toast({
+        title: "Éxito",
+        description: "Orden actualizado correctamente",
+      });
+    } catch (error) {
+      console.error("Error reordering items:", error);
+      toast({
+        title: "Error",
+        description: "No se pudo cambiar el orden",
+        variant: "destructive",
+      });
+    }
   };
 
   const resetForm = () => {
@@ -244,38 +306,6 @@ const CarouselAdmin = () => {
     setIsDialogOpen(true);
   };
 
-  const moveItemUp = async (index) => {
-    if (index === 0) return;
-
-    const newItems = [...items];
-    const temp = newItems[index];
-    newItems[index] = newItems[index - 1];
-    newItems[index - 1] = temp;
-
-    // Update order values
-    const reorderedItems = newItems.map((item, idx) => ({
-      ...item,
-      order: idx,
-    }));
-    await saveItems(reorderedItems);
-  };
-
-  const moveItemDown = async (index) => {
-    if (index === items.length - 1) return;
-
-    const newItems = [...items];
-    const temp = newItems[index];
-    newItems[index] = newItems[index + 1];
-    newItems[index + 1] = temp;
-
-    // Update order values
-    const reorderedItems = newItems.map((item, idx) => ({
-      ...item,
-      order: idx,
-    }));
-    await saveItems(reorderedItems);
-  };
-
   if (previewMode) {
     return (
       <div>
@@ -310,7 +340,7 @@ const CarouselAdmin = () => {
                 Agregar Elemento
               </Button>
             </DialogTrigger>
-            <DialogContent className="w-full max-w-7xl  max-h-[90vh] overflow-y-auto">
+            <DialogContent className="w-full max-w-7xl max-h-[90vh] overflow-y-auto">
               <DialogHeader>
                 <DialogTitle>
                   {editingItem ? "Editar Elemento" : "Agregar Elemento"}
@@ -402,7 +432,13 @@ const CarouselAdmin = () => {
                               }
                             }}
                             className="mt-1"
+                            disabled={uploading}
                           />
+                          {uploading && (
+                            <p className="text-sm text-blue-600 mt-1">
+                              Subiendo imagen...
+                            </p>
+                          )}
                         </div>
 
                         <div>
@@ -447,7 +483,7 @@ const CarouselAdmin = () => {
                           className="flex items-center gap-2"
                         >
                           <Video className="w-4 h-4" />
-                          URL del Video (MP4)
+                          URL del Video (YouTube o MP4)
                         </Label>
                         <Input
                           id="videoUrl"
@@ -459,12 +495,11 @@ const CarouselAdmin = () => {
                               imageUrl: "",
                             }))
                           }
-                          placeholder="https://ejemplo.com/video.mp4"
+                          placeholder="https://www.youtube.com/watch?v=... o https://ejemplo.com/video.mp4"
                           className="mt-1"
                         />
                         <p className="text-sm text-gray-500 mt-1">
-                          El video se reproducirá automáticamente en bucle como
-                          fondo
+                          Soporta videos de YouTube y archivos MP4 directos
                         </p>
                       </div>
                     </TabsContent>
@@ -597,14 +632,7 @@ const CarouselAdmin = () => {
             </Card>
           ) : (
             items.map((item, index) => (
-              <Card
-                key={item.id}
-                className="transition-all hover:shadow-md"
-                draggable
-                onDragStart={(e) => handleDragStart(e, item)}
-                onDragOver={handleDragOver}
-                onDrop={(e) => handleDrop(e, item)}
-              >
+              <Card key={item.id} className="transition-all hover:shadow-md">
                 <CardHeader className="flex flex-row items-center justify-between space-y-0 pb-3">
                   <div className="flex items-center gap-3">
                     <div className="flex flex-col gap-1">

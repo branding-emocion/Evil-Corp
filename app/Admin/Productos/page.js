@@ -161,7 +161,7 @@
 //                         e.preventDefault();
 //                         setFilterByCategoria(Categoria.id);
 //                       }}
-//                       className="bg-orange-500 space-x-1.5 rounded-lg  px-4 py-1.5 text-white duration-100 hover:bg-orange-600"
+//                       className="bg-orange-500 space-x-1.5 rounded-lg  px-4 py-1.5 text-white duration-100 hover:bg-[#e7b617]"
 //                     >
 //                       <EyeIcon className=" h-4 w-4" />
 //                     </button>
@@ -723,7 +723,7 @@ const Productos = () => {
                     <Button
                       size="sm"
                       onClick={() => setFilterByCategoria(categoria.id)}
-                      className="bg-orange-500 hover:bg-orange-600 text-white"
+                      className="bg-orange-500 hover:bg-[#e7b617] text-white"
                     >
                       <EyeIcon className="h-4 w-4" />
                     </Button>

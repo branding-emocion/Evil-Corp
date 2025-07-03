@@ -78,7 +78,7 @@ const BannerPrincipal = ({ items = [] }) => {
             priority={currentIndex === 0}
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-r from-orange-500 to-orange-600" />
+          <div className="w-full h-full bg-gradient-to-r from-orange-500 to-[#e7b617]" />
         )}
 
         {/* Overlay */}
@@ -110,7 +110,7 @@ const BannerPrincipal = ({ items = [] }) => {
             {currentItem.buttonText && (
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-orange-600 text-white px-8 py-3"
+                className="bg-orange-500 hover:bg-[#e7b617] text-white px-8 py-3"
                 onClick={() =>
                   currentItem.buttonLink &&
                   window.open(currentItem.buttonLink, "_blank")

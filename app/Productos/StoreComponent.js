@@ -62,9 +62,9 @@ export default function StoreComponent({ products, categories }) {
             <li>
               <Button
                 variant={
-                  selectedCategory === "Todos" ? "default" : "bg-[#ff6900]"
+                  selectedCategory === "Todos" ? "default" : "bg-[#e7b617]"
                 }
-                className="w-full justify-start hover:bg-[#ff6900]"
+                className="w-full justify-start hover:bg-[#e7b617]"
                 onClick={(e) => {
                   e.preventDefault();
                   setSelectedCategory("Todos");

@@ -28,7 +28,7 @@ function TitleSection({ title, image = "", position = "bottom" }) {
     //     </div>
     //   </div>
     // </motion.section>
-    <section className="relative bg-[#ff6900]  py-24">
+    <section className="relative bg-[#e7b617]  py-24">
       <div className="absolute inset-0 bg-black/30"></div>
       <div className="container mx-auto px-4 relative z-10">
         <motion.div
