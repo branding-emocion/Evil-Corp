@@ -32,9 +32,6 @@ const HomePage = () => {
     {
       imagen: "/Banner.webp",
     },
-    {
-      imagen: "/Banner2.webp",
-    },
   ];
 
   const fadeInVariants = {
@@ -118,7 +115,7 @@ const HomePage = () => {
     if (producto?.Variantes?.length > 0) {
       return producto.Variantes[0]?.url;
     }
-    return "/placeholder.svg?height=200&width=300";
+    return "";
   };
 
   return (

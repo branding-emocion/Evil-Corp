@@ -115,7 +115,7 @@ const BannerPrincipal = ({ items = [] }) => {
             priority={currentIndex === 0}
           />
         ) : (
-          <div className="w-full h-full bg-gradient-to-r from-orange-500 to-[#e7b617]" />
+          <div className="w-full h-full bg-gradient-to-r from-[#e7b617] to-[#e7b617]" />
         )}
 
         {/* Overlay */}
@@ -126,7 +126,7 @@ const BannerPrincipal = ({ items = [] }) => {
       <div className="relative z-10 h-full flex items-center justify-center">
         <div className="text-center text-white max-w-4xl px-4">
           {/* Badge */}
-          <div className="inline-block bg-orange-500 text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
+          <div className="inline-block bg-[#e7b617] text-white px-4 py-2 rounded-full text-sm font-semibold mb-6">
             CORPORACIÓN R&L
           </div>
 
@@ -147,7 +147,7 @@ const BannerPrincipal = ({ items = [] }) => {
             {currentItem.buttonText && (
               <Button
                 size="lg"
-                className="bg-orange-500 hover:bg-[#e7b617] text-white px-8 py-3"
+                className="bg-[#e7b617] hover:bg-[#e7b617] text-white px-8 py-3"
                 onClick={() =>
                   currentItem.buttonLink &&
                   window.open(currentItem.buttonLink, "_blank")
