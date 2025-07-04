@@ -128,7 +128,7 @@ export default function NosotrosPage() {
                 </div>
 
                 {/* Elementos decorativos */}
-                <div className="absolute -top-4 -left-4 w-24 h-24 bg-orange-500 rounded-full opacity-20"></div>
+                <div className="absolute -top-4 -left-4 w-24 h-24 bg-[#10603e] rounded-full opacity-20"></div>
                 <div className="absolute top-1/2 -right-6 w-16 h-16 bg-[#10603e] rounded-full opacity-30"></div>
               </motion.div>
 
@@ -136,9 +136,9 @@ export default function NosotrosPage() {
               <motion.div variants={fadeInVariants} className="space-y-8">
                 <div>
                   <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-                    ¿Quiénes <span className="text-orange-500">Somos?</span>
+                    ¿Quiénes <span className="text-[#10603e]">Somos?</span>
                   </h2>
-                  <div className="w-20 h-1 bg-orange-500 mb-6"></div>
+                  <div className="w-20 h-1 bg-[#10603e] mb-6"></div>
                 </div>
 
                 <div className="space-y-6 text-lg text-gray-600 leading-relaxed">
@@ -242,9 +242,9 @@ export default function NosotrosPage() {
           >
             <motion.div variants={fadeInVariants} className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-                Misión y <span className="text-orange-500">Visión</span>
+                Misión y <span className="text-[#10603e]">Visión</span>
               </h2>
-              <div className="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+              <div className="w-20 h-1 bg-[#10603e] mx-auto mb-6"></div>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Nuestro propósito y objetivos que guían cada decisión que
                 tomamos para servir mejor a nuestros clientes
@@ -278,7 +278,7 @@ export default function NosotrosPage() {
                 className="group hover:scale-105 transition-all duration-300"
               >
                 <div className="bg-white p-10 rounded-3xl shadow-xl hover:shadow-2xl transition-shadow duration-300 h-full">
-                  <div className="w-20 h-20 bg-gradient-to-br from-orange-500 to-red-500 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
+                  <div className="w-20 h-20 bg-gradient-to-br from-[#10603e] to-red-500 rounded-2xl flex items-center justify-center mb-8 group-hover:scale-110 transition-transform duration-300">
                     <Briefcase className="w-10 h-10 text-white" />
                   </div>
                   <h3 className="text-3xl font-bold text-gray-800 mb-6">
@@ -309,9 +309,9 @@ export default function NosotrosPage() {
           >
             <motion.div variants={fadeInVariants} className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-                Nuestros <span className="text-orange-500">Valores</span>
+                Nuestros <span className="text-[#10603e]">Valores</span>
               </h2>
-              <div className="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+              <div className="w-20 h-1 bg-[#10603e] mx-auto mb-6"></div>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Los principios fundamentales que definen nuestra forma de
                 trabajar y relacionarnos con nuestros clientes
@@ -327,7 +327,7 @@ export default function NosotrosPage() {
                   <div className="w-32 h-32 bg-gradient-to-br from-orange-100 to-orange-200 rounded-full flex items-center justify-center mx-auto group-hover:scale-110 transition-transform duration-300 shadow-lg">
                     <Award className="w-16 h-16 text-[#e7b617]" />
                   </div>
-                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-orange-500 rounded-full"></div>
+                  <div className="absolute -top-2 -right-2 w-8 h-8 bg-[#10603e] rounded-full"></div>
                 </div>
                 <h3 className="text-2xl font-bold text-gray-800 mb-4">
                   GARANTÍA
@@ -395,9 +395,9 @@ export default function NosotrosPage() {
           >
             <motion.div variants={fadeInVariants} className="text-center mb-16">
               <h2 className="text-4xl md:text-5xl font-bold text-gray-800 mb-6">
-                Nuestros <span className="text-orange-500">Servicios</span>
+                Nuestros <span className="text-[#10603e]">Servicios</span>
               </h2>
-              <div className="w-20 h-1 bg-orange-500 mx-auto mb-6"></div>
+              <div className="w-20 h-1 bg-[#10603e] mx-auto mb-6"></div>
               <p className="text-xl text-gray-600 max-w-3xl mx-auto">
                 Ofrecemos servicios integrales para garantizar el óptimo
                 funcionamiento de tu maquinaria industrial

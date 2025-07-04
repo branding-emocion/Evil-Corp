@@ -15,6 +15,7 @@ import {
   Shield,
   Zap,
 } from "lucide-react";
+import Image from "next/image";
 
 const Footer = () => {
   const fadeInVariants = {
@@ -54,16 +55,13 @@ const Footer = () => {
           <motion.div variants={fadeInVariants} className="lg:col-span-1">
             <div className="mb-6">
               <div className="flex items-center space-x-3 mb-4">
-                <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center">
-                  <span className="text-white font-bold text-xl">R&L</span>
-                </div>
-                <div>
-                  <h3 className="text-xl font-bold text-white">
-                    CORPORACIÓN R&L
-                  </h3>
-                  <p className="text-sm text-orange-400">
-                    Maquinaria Industrial
-                  </p>
+                <div className="w-[250px]  h-[101px] relative ">
+                  <Image
+                    src="/logoBlanco1.png"
+                    alt="Logo"
+                    fill
+                    className="object-contain"
+                  />
                 </div>
               </div>
             </div>
@@ -77,15 +75,15 @@ const Footer = () => {
             {/* Valores */}
             <div className="grid grid-cols-3 gap-4 mb-6">
               <div className="text-center">
-                <Award className="w-6 h-6 text-orange-400 mx-auto mb-1" />
+                <Award className="w-6 h-6 text-[#e7b617] mx-auto mb-1" />
                 <p className="text-xs font-medium">GARANTÍA</p>
               </div>
               <div className="text-center">
-                <Shield className="w-6 h-6 text-orange-400 mx-auto mb-1" />
+                <Shield className="w-6 h-6 text-[#e7b617] mx-auto mb-1" />
                 <p className="text-xs font-medium">CALIDAD</p>
               </div>
               <div className="text-center">
-                <Zap className="w-6 h-6 text-orange-400 mx-auto mb-1" />
+                <Zap className="w-6 h-6 text-[#e7b617] mx-auto mb-1" />
                 <p className="text-xs font-medium">EFICIENCIA</p>
               </div>
             </div>
@@ -94,28 +92,28 @@ const Footer = () => {
             <div className="flex space-x-4">
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors duration-300"
+                className="w-10 h-10 bg-gray-800 hover:bg-[#e7b617] rounded-lg flex items-center justify-center transition-colors duration-300"
                 aria-label="Facebook"
               >
                 <Facebook className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors duration-300"
+                className="w-10 h-10 bg-gray-800 hover:bg-[#e7b617] rounded-lg flex items-center justify-center transition-colors duration-300"
                 aria-label="Instagram"
               >
                 <Instagram className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors duration-300"
+                className="w-10 h-10 bg-gray-800 hover:bg-[#e7b617] rounded-lg flex items-center justify-center transition-colors duration-300"
                 aria-label="LinkedIn"
               >
                 <Linkedin className="w-5 h-5" />
               </a>
               <a
                 href="#"
-                className="w-10 h-10 bg-gray-800 hover:bg-orange-500 rounded-lg flex items-center justify-center transition-colors duration-300"
+                className="w-10 h-10 bg-gray-800 hover:bg-[#e7b617] rounded-lg flex items-center justify-center transition-colors duration-300"
                 aria-label="YouTube"
               >
                 <Youtube className="w-5 h-5" />
@@ -133,7 +131,7 @@ const Footer = () => {
                 <li key={index}>
                   <Link
                     href={enlace.href}
-                    className="text-gray-300 hover:text-orange-400 transition-colors duration-300 flex items-center group"
+                    className="text-gray-300 hover:text-[#e7b617] transition-colors duration-300 flex items-center group"
                   >
                     <ArrowRight className="w-4 h-4 mr-2 group-hover:translate-x-1 transition-transform duration-300" />
                     {enlace.nombre}
@@ -149,15 +147,15 @@ const Footer = () => {
               </h4>
               <div className="space-y-2 text-gray-300">
                 <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <Clock className="w-4 h-4 mr-2 text-[#e7b617]" />
                   <span className="text-sm">Lun - Vie: 8:00 AM - 6:00 PM</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <Clock className="w-4 h-4 mr-2 text-[#e7b617]" />
                   <span className="text-sm">Sáb: 8:00 AM - 1:00 PM</span>
                 </div>
                 <div className="flex items-center">
-                  <Clock className="w-4 h-4 mr-2 text-orange-400" />
+                  <Clock className="w-4 h-4 mr-2 text-[#e7b617]" />
                   <span className="text-sm">Dom: Cerrado</span>
                 </div>
               </div>
@@ -171,7 +169,7 @@ const Footer = () => {
             <div className="space-y-4">
               {/* Dirección */}
               <div className="flex items-start space-x-3">
-                <div className="w-10 h-10 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                <div className="w-10 h-10 bg-[#e7b617] rounded-lg flex items-center justify-center flex-shrink-0">
                   <MapPin className="w-5 h-5 text-white" />
                 </div>
                 <div>
@@ -198,13 +196,13 @@ const Footer = () => {
                   <div className="space-y-1">
                     <a
                       href="tel:+51960040522"
-                      className="block text-gray-300 hover:text-orange-400 transition-colors text-sm"
+                      className="block text-gray-300 hover:text-[#e7b617] transition-colors text-sm"
                     >
                       +51 960 040 522
                     </a>
                     <a
                       href="tel:+51967447382"
-                      className="block text-gray-300 hover:text-orange-400 transition-colors text-sm"
+                      className="block text-gray-300 hover:text-[#e7b617] transition-colors text-sm"
                     >
                       +51 967 447 382
                     </a>
@@ -221,7 +219,7 @@ const Footer = () => {
                   <p className="text-white font-medium mb-1">Email</p>
                   <a
                     href="mailto:VENTAS@CORPORACIONRYL.COM"
-                    className="text-gray-300 hover:text-orange-400 transition-colors text-sm"
+                    className="text-gray-300 hover:text-[#e7b617] transition-colors text-sm"
                   >
                     VENTAS@CORPORACIONRYL.COM
                   </a>
@@ -277,19 +275,19 @@ const Footer = () => {
             {/* <div className="flex flex-wrap justify-center md:justify-end space-x-6 text-sm">
               <Link
                 href="/privacidad"
-                className="text-gray-400 hover:text-orange-400 transition-colors"
+                className="text-gray-400 hover:text-[#e7b617] transition-colors"
               >
                 Política de Privacidad
               </Link>
               <Link
                 href="/terminos"
-                className="text-gray-400 hover:text-orange-400 transition-colors"
+                className="text-gray-400 hover:text-[#e7b617] transition-colors"
               >
                 Términos de Uso
               </Link>
               <Link
                 href="/cookies"
-                className="text-gray-400 hover:text-orange-400 transition-colors"
+                className="text-gray-400 hover:text-[#e7b617] transition-colors"
               >
                 Política de Cookies
               </Link>
@@ -299,7 +297,7 @@ const Footer = () => {
       </div>
 
       {/* Elemento decorativo */}
-      <div className="h-1 bg-gradient-to-r from-green-600 via-orange-500 to-red-600"></div>
+      <div className="h-1 bg-gradient-to-r from-green-600 via-[#e7b617] to-red-600"></div>
     </footer>
   );
 };

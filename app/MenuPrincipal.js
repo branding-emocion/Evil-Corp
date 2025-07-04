@@ -224,7 +224,7 @@ const MenuPrincipal = () => {
               {/* Información de contacto móvil */}
               <div className="pt-4 border-t border-green-700 space-y-3">
                 <Link href="/Contacto" onClick={() => setIsOpen(false)}>
-                  <Button className="w-full bg-orange-500 hover:bg-[#e7b617] text-white font-semibold py-3 rounded-lg">
+                  <Button className="w-full bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold py-3 rounded-lg">
                     Cotizar Ahora
                   </Button>
                 </Link>

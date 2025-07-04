@@ -76,7 +76,7 @@ const Contacto = () => {
             <motion.div variants={cardVariants} transition={{ delay: 0.1 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-16 h-16 bg-[#006039] rounded-full flex items-center justify-center mx-auto mb-6">
                     <Phone className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-gray-800">
@@ -103,7 +103,7 @@ const Contacto = () => {
             <motion.div variants={cardVariants} transition={{ delay: 0.2 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-16 h-16 bg-[#006039] rounded-full flex items-center justify-center mx-auto mb-6">
                     <Mail className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-gray-800">
@@ -122,7 +122,7 @@ const Contacto = () => {
             <motion.div variants={cardVariants} transition={{ delay: 0.3 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
-                  <div className="w-16 h-16 bg-orange-500 rounded-full flex items-center justify-center mx-auto mb-6">
+                  <div className="w-16 h-16 bg-[#006039] rounded-full flex items-center justify-center mx-auto mb-6">
                     <MapPin className="w-8 h-8 text-white" />
                   </div>
                   <h3 className="text-xl font-bold mb-4 text-gray-800">
@@ -156,7 +156,7 @@ const Contacto = () => {
 
                   <div className="space-y-6">
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#006039] rounded-lg flex items-center justify-center flex-shrink-0">
                         <Mail className="w-6 h-6 text-white" />
                       </div>
                       <div>
@@ -171,7 +171,7 @@ const Contacto = () => {
                     </div>
 
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#006039] rounded-lg flex items-center justify-center flex-shrink-0">
                         <Phone className="w-6 h-6 text-white" />
                       </div>
                       <div>
@@ -194,7 +194,7 @@ const Contacto = () => {
                     </div>
 
                     <div className="flex items-start space-x-4">
-                      <div className="w-12 h-12 bg-orange-500 rounded-lg flex items-center justify-center flex-shrink-0">
+                      <div className="w-12 h-12 bg-[#006039] rounded-lg flex items-center justify-center flex-shrink-0">
                         <MapPin className="w-6 h-6 text-white" />
                       </div>
                       <div>
@@ -310,7 +310,7 @@ const Contacto = () => {
                           autoComplete="off"
                           autoFocus
                           required
-                          className="h-12 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                          className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
                           onChange={(e) => {
                             setInputValues({
                               ...InputValues,
@@ -332,7 +332,7 @@ const Contacto = () => {
                           required
                           placeholder="ejemplo@correo.com"
                           autoComplete="off"
-                          className="h-12 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                          className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
                           onChange={(e) => {
                             setInputValues({
                               ...InputValues,
@@ -377,7 +377,7 @@ const Contacto = () => {
                         type="text"
                         required
                         autoComplete="off"
-                        className="h-12 border-gray-300 focus:border-orange-500 focus:ring-orange-500"
+                        className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
                         onChange={(e) => {
                           setInputValues({
                             ...InputValues,
@@ -400,7 +400,7 @@ const Contacto = () => {
                         required
                         rows={5}
                         autoComplete="off"
-                        className="border-gray-300 focus:border-orange-500 focus:ring-orange-500 resize-none"
+                        className="border-gray-300 focus:border-[#006039] focus:ring-[#006039] resize-none"
                         onChange={(e) => {
                           setInputValues({
                             ...InputValues,
@@ -412,7 +412,7 @@ const Contacto = () => {
 
                     <Button
                       type="submit"
-                      className="w-full h-12 bg-orange-500 hover:bg-[#e7b617] text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:cursor-pointer"
+                      className="w-full h-12 bg-[#006039] hover:bg-[#e7b617] text-white font-semibold text-lg shadow-lg hover:shadow-xl transition-all duration-300 hover:cursor-pointer"
                       disabled={IsLoading}
                     >
                       {IsLoading ? (

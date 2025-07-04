@@ -250,7 +250,7 @@ const ModalShowProducto = ({
 
           {/* Sección inferior - Contacto horizontal */}
           <div className="border-t pt-6">
-            <div className="bg-orange-500 text-white rounded-t-lg p-4 text-center">
+            <div className="bg-[#006039] text-white rounded-t-lg p-4 text-center">
               <h3 className="text-lg font-bold">
                 ¿Interesado en este producto?
               </h3>
