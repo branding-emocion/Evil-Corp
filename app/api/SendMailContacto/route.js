@@ -29,7 +29,7 @@ export async function POST(request) {
 
   const mailOptions = {
     from: '"Contacto de CORPORACIONRYL.COM" <notificacion@brandingemocion.net>',
-    to: "aquilesfabianmendozatasayco@gmail.com",
+    to: "ventas@corporacionryl.com",
     subject: ` Formulario de Contacto de REANDCORPORACIONRYL.COM`, // Asunto del correo
     html: `
       <div style="font-family: Arial, sans-serif; max-width: 600px; margin: auto; border: 1px solid #ccc; padding: 20px; border-radius: 10px; background-color: #f9f9f9;">
