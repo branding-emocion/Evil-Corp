@@ -73,19 +73,17 @@ const ModalShowProducto = ({
 
   // Función para enviar email
   const sendEmail = () => {
-    const subject = `Consulta sobre: ${product?.NombreProducto}`;
-    const priceText = product?.Precio ? `\nPrecio: ${product.Precio}` : "";
-    const body = `Hola,\n\nEstoy interesado en el siguiente producto:\n\nNombre: ${
-      product?.NombreProducto
+    const subject = `Consulta sobre: ${product?.NombreProducto || 'Producto'}`;
+    const priceText = product?.Precio ? `%0D%0APrecio: ${product.Precio}` : "";
+    const body = `Hola,%0D%0A%0D%0AEstoy interesado en el siguiente producto:%0D%0A%0D%0ANombre: ${
+      product?.NombreProducto || 'Sin nombre'
     }${
-      product?.ITEM ? `\nCódigo: ${product?.ITEM}` : ""
-    }${priceText}\nCategoría: ${
+      product?.ITEM ? `%0D%0ACódigo: ${product?.ITEM}` : ""
+    }${priceText}%0D%0ACategoría: ${
       categoriaProducto?.NombreCategoria || "Sin categoría"
-    }\n\n¿Podrían brindarme más información y cotización?\n\nGracias.`;
-    const emailUrl = `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(
-      subject
-    )}&body=${encodeURIComponent(body)}`;
-    window.open(emailUrl, "_self");
+    }%0D%0A%0D%0A¿Podrían brindarme más información y cotización?%0D%0A%0D%0AGracias.`;
+    
+    window.location.href = `mailto:${CONTACT_INFO.email}?subject=${encodeURIComponent(subject)}&body=${body}`;
   };
 
   return (
