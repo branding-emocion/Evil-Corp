@@ -33,11 +33,11 @@ const ModalShowProducto = ({
 }) => {
   const NewArray = product?.ImagenesGenerales || [];
 
-  // Información de contacto de la empresa
+  // Información de contacto de la empresa - ACTUALIZADA
   const CONTACT_INFO = {
-    phone: "+51 987 654 321",
-    whatsapp: "+51987654321",
-    email: "ventas@r-corporacion.com",
+    phone: "+51 960 040 522",
+    whatsapp: "+51960040522",
+    email: "ventas@corporacionryl.com",
     companyName: "R-CORPORACIÓN",
   };
 
