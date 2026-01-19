@@ -28,7 +28,7 @@ export async function POST(request) {
       .join(""); // Join para unir todas las filas en un solo string
 
   const mailOptions = {
-    from: '"Contacto de CORPORACIONRYL.COM" <notificacion@brandingemocion.net>', // El remitente del correo
+    from: '"Contacto de CORPORACIONRYL.COM" <notificacion@brandingemocion.net>',
     to: "aquilesfabianmendozatasayco@gmail.com",
     subject: ` Formulario de Contacto de REANDCORPORACIONRYL.COM`, // Asunto del correo
     html: `
