@@ -34,9 +34,9 @@ const MenuPrincipal = () => {
             stiffness: 260,
             damping: 20,
           }}
-          title="WhatsApp - 967 447 382"
+          title="WhatsApp - 960 040 522"
           aria-label="WhatsApp Alternativo"
-          href="https://api.whatsapp.com/send/?phone=%2B51967447382&text=Hola,%20me%20interesa%20obtener%20información%20sobre%20sus%20productos"
+          href="https://api.whatsapp.com/send/?phone=%2B51960040522&text=Hola,%20me%20interesa%20obtener%20información%20sobre%20sus%20productos"
           target="_blank"
           rel="noopener noreferrer"
           className="bg-green-600 p-3 rounded-full shadow-lg hover:bg-green-700 hover:scale-110 transition-all duration-300 group"
