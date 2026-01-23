@@ -1,6 +1,6 @@
 "use client";
 
-import { motion } from "framer-motion";
+import { motion, AnimatePresence } from "framer-motion";
 import Link from "next/link";
 import { useState, useEffect } from "react";
 import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
@@ -24,6 +24,7 @@ const HomePage = () => {
   const [categorias, setCategorias] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [carouselItems, setCarouselItems] = useState([]);
+  const [showStaticBanner, setShowStaticBanner] = useState(true);
 
   const BannerInicio = [
     {
@@ -45,6 +46,17 @@ const HomePage = () => {
       },
     },
   };
+
+  // Alternar entre imagen estática y carrusel
+  useEffect(() => {
+    if (carouselItems.length > 0) {
+      const interval = setInterval(() => {
+        setShowStaticBanner((prev) => !prev);
+      }, 8000); // Cambia cada 8 segundos
+
+      return () => clearInterval(interval);
+    }
+  }, [carouselItems]);
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -110,82 +122,176 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* Carousel Section - ALTURA FIJA para evitar saltos */}
-      <div className="relative w-full h-[85vh] md:h-[90vh] lg:h-[93vh]">
-        {carouselItems.length > 0 ? (
-          // BannerPrincipal cuando hay datos de Firebase
-          <BannerPrincipal items={carouselItems} />
-        ) : (
-          // Fallback banner cuando no hay datos o están cargando
-          <div className="relative w-full h-full">
-            <img
-              src={BannerInicio[0].imagen || ""}
-              className="h-full w-full object-contain lg:object-cover overflow-hidden"
-              alt="slider fallback"
-            />
+      {/* Carousel Section con animación fade */}
+      <div className="relative w-full h-[85vh] md:h-[90vh] lg:h-[93vh] overflow-hidden">
+        <AnimatePresence mode="wait">
+          {carouselItems.length > 0 && showStaticBanner ? (
+            // Banner estático con animación
             <motion.div
-              className="absolute top-0 left-0 w-full h-full text-white bg-black/50 hidden lg:block"
-              initial="hidden"
-              animate="visible"
-              variants={fadeInVariants}
-              transition={{ duration: 0.8, delay: 0.2 }}
+              key="static-banner"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="relative w-full h-full"
             >
-              <div className="flex justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-20">
-                <div className="max-w-2xl space-y-6">
-                  <motion.div
-                    className="inline-block px-6 py-3 bg-[#e7b617] text-white font-bold text-lg uppercase rounded-lg shadow-lg"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInVariants}
-                    transition={{ duration: 0.8, delay: 0.3 }}
-                  >
-                    Corporación R&L
-                  </motion.div>
-                  <motion.h1
-                    className="text-4xl sm:text-6xl font-extrabold leading-tight"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInVariants}
-                    transition={{ duration: 0.8, delay: 0.4 }}
-                  >
-                    Maquinaria Industrial
-                    <span className="block text-orange-400">de Calidad</span>
-                  </motion.h1>
-                  <motion.p
-                    className="text-xl text-gray-200 max-w-lg"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInVariants}
-                    transition={{ duration: 0.8, delay: 0.5 }}
-                  >
-                    Más de 6 años de experiencia en el mercado peruano. Garantía,
-                    Calidad y Eficiencia en cada proyecto.
-                  </motion.p>
-                  <motion.div
-                    className="flex flex-col sm:flex-row gap-4"
-                    initial="hidden"
-                    animate="visible"
-                    variants={fadeInVariants}
-                    transition={{ duration: 0.8, delay: 0.6 }}
-                  >
-                    <Link href="/Productos">
-                      <div className="group inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
-                        <span>Ver Productos</span>
-                        <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                      </div>
-                    </Link>
-                    <Link href="/Contacto">
-                      <div className="group inline-flex items-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
-                        <span>Cotizar Ahora</span>
-                        <Phone className="ml-2 w-5 h-5" />
-                      </div>
-                    </Link>
-                  </motion.div>
+              <img
+                src={BannerInicio[0].imagen || ""}
+                className="h-full w-full object-cover"
+                alt="slider fallback"
+              />
+              <motion.div
+                className="absolute top-0 left-0 w-full h-full text-white bg-black/50 hidden lg:block"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariants}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <div className="flex justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-20">
+                  <div className="max-w-2xl space-y-6">
+                    <motion.div
+                      className="inline-block px-6 py-3 bg-[#e7b617] text-white font-bold text-lg uppercase rounded-lg shadow-lg"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.3 }}
+                    >
+                      Corporación R&L
+                    </motion.div>
+                    <motion.h1
+                      className="text-4xl sm:text-6xl font-extrabold leading-tight"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.4 }}
+                    >
+                      Maquinaria Industrial
+                      <span className="block text-orange-400">de Calidad</span>
+                    </motion.h1>
+                    <motion.p
+                      className="text-xl text-gray-200 max-w-lg"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.5 }}
+                    >
+                      Más de 6 años de experiencia en el mercado peruano. Garantía,
+                      Calidad y Eficiencia en cada proyecto.
+                    </motion.p>
+                    <motion.div
+                      className="flex flex-col sm:flex-row gap-4"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.6 }}
+                    >
+                      <Link href="/Productos">
+                        <div className="group inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                          <span>Ver Productos</span>
+                          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </Link>
+                      <Link href="/Contacto">
+                        <div className="group inline-flex items-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
+                          <span>Cotizar Ahora</span>
+                          <Phone className="ml-2 w-5 h-5" />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  </div>
                 </div>
-              </div>
+              </motion.div>
             </motion.div>
-          </div>
-        )}
+          ) : carouselItems.length > 0 ? (
+            // BannerPrincipal (carrusel) con animación
+            <motion.div
+              key="carousel-banner"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              exit={{ opacity: 0 }}
+              transition={{ duration: 1 }}
+              className="w-full h-full"
+            >
+              <BannerPrincipal items={carouselItems} />
+            </motion.div>
+          ) : (
+            // Fallback solo imagen estática (cuando no hay carrusel cargado)
+            <motion.div
+              key="fallback-banner"
+              initial={{ opacity: 0 }}
+              animate={{ opacity: 1 }}
+              transition={{ duration: 1 }}
+              className="relative w-full h-full"
+            >
+              <img
+                src={BannerInicio[0].imagen || ""}
+                className="h-full w-full object-cover"
+                alt="slider fallback"
+              />
+              <motion.div
+                className="absolute top-0 left-0 w-full h-full text-white bg-black/50 hidden lg:block"
+                initial="hidden"
+                animate="visible"
+                variants={fadeInVariants}
+                transition={{ duration: 0.8, delay: 0.2 }}
+              >
+                <div className="flex justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-20">
+                  <div className="max-w-2xl space-y-6">
+                    <motion.div
+                      className="inline-block px-6 py-3 bg-[#e7b617] text-white font-bold text-lg uppercase rounded-lg shadow-lg"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.3 }}
+                    >
+                      Corporación R&L
+                    </motion.div>
+                    <motion.h1
+                      className="text-4xl sm:text-6xl font-extrabold leading-tight"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.4 }}
+                    >
+                      Maquinaria Industrial
+                      <span className="block text-orange-400">de Calidad</span>
+                    </motion.h1>
+                    <motion.p
+                      className="text-xl text-gray-200 max-w-lg"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.5 }}
+                    >
+                      Más de 6 años de experiencia en el mercado peruano. Garantía,
+                      Calidad y Eficiencia en cada proyecto.
+                    </motion.p>
+                    <motion.div
+                      className="flex flex-col sm:flex-row gap-4"
+                      initial="hidden"
+                      animate="visible"
+                      variants={fadeInVariants}
+                      transition={{ duration: 0.8, delay: 0.6 }}
+                    >
+                      <Link href="/Productos">
+                        <div className="group inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                          <span>Ver Productos</span>
+                          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
+                        </div>
+                      </Link>
+                      <Link href="/Contacto">
+                        <div className="group inline-flex items-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
+                          <span>Cotizar Ahora</span>
+                          <Phone className="ml-2 w-5 h-5" />
+                        </div>
+                      </Link>
+                    </motion.div>
+                  </div>
+                </div>
+              </motion.div>
+            </motion.div>
+          )}
+        </AnimatePresence>
       </div>
 
       {/* Valores Section */}
