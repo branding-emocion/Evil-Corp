@@ -5,11 +5,9 @@ import { ChevronLeft, ChevronRight } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import Image from "next/image";
 
-// Función para detectar y convertir URLs de YouTube
 const getYouTubeEmbedUrl = (url) => {
   if (!url) return null;
 
-  // Patrones para diferentes formatos de YouTube
   const patterns = [
     /(?:youtube\.com\/watch\?v=|youtu\.be\/|youtube\.com\/embed\/)([^&\n?#]+)/,
     /youtube\.com\/watch\?.*v=([^&\n?#]+)/,
@@ -25,7 +23,6 @@ const getYouTubeEmbedUrl = (url) => {
   return null;
 };
 
-// Función para verificar si es una URL de YouTube
 const isYouTubeUrl = (url) => {
   if (!url) return false;
   return /(?:youtube\.com|youtu\.be)/.test(url);
@@ -35,7 +32,6 @@ const BannerPrincipal = ({ items = [] }) => {
   const [currentIndex, setCurrentIndex] = useState(0);
   const [isAutoPlaying, setIsAutoPlaying] = useState(true);
 
-  // Auto-play functionality
   useEffect(() => {
     if (!isAutoPlaying || items.length <= 1) return;
 
@@ -62,7 +58,7 @@ const BannerPrincipal = ({ items = [] }) => {
 
   if (items.length === 0) {
     return (
-      <div className="relative h-[600px] bg-gradient-to-r from-gray-800 to-gray-600 flex items-center justify-center">
+      <div className="relative w-full h-full bg-gradient-to-r from-gray-800 to-gray-600 flex items-center justify-center">
         <div className="text-center text-white">
           <h2 className="text-3xl font-bold mb-4">
             No hay elementos en el carrusel
@@ -79,7 +75,7 @@ const BannerPrincipal = ({ items = [] }) => {
 
   return (
     <div
-      className="relative h-[600px] overflow-hidden"
+      className="relative w-full h-full overflow-hidden"
       onMouseEnter={() => setIsAutoPlaying(false)}
       onMouseLeave={() => setIsAutoPlaying(true)}
     >
@@ -147,7 +143,7 @@ const BannerPrincipal = ({ items = [] }) => {
             {currentItem.buttonText && (
               <Button
                 size="lg"
-                className="bg-[#e7b617] hover:bg-[#e7b617] text-white px-8 py-3"
+                className="bg-[#e7b617] hover:bg-[#d4a515] text-white px-8 py-3"
                 onClick={() =>
                   currentItem.buttonLink &&
                   window.open(currentItem.buttonLink, "_blank")
