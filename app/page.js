@@ -25,6 +25,7 @@ const HomePage = () => {
   const [isLoading, setIsLoading] = useState(true);
   const [carouselItems, setCarouselItems] = useState([]);
   const [showStaticBanner, setShowStaticBanner] = useState(true);
+  const [hasShownStatic, setHasShownStatic] = useState(false);
 
   const BannerInicio = [
     {
@@ -47,16 +48,17 @@ const HomePage = () => {
     },
   };
 
-  // Alternar entre imagen estática y carrusel
+  // Mostrar banner estático solo UNA VEZ al inicio
   useEffect(() => {
-    if (carouselItems.length > 0) {
-      const interval = setInterval(() => {
-        setShowStaticBanner((prev) => !prev);
-      }, 8000); // Cambia cada 8 segundos
+    if (carouselItems.length > 0 && !hasShownStatic) {
+      const timer = setTimeout(() => {
+        setShowStaticBanner(false);
+        setHasShownStatic(true);
+      }, 6000); // Muestra el banner estático por 6 segundos solo la primera vez
 
-      return () => clearInterval(interval);
+      return () => clearTimeout(timer);
     }
-  }, [carouselItems]);
+  }, [carouselItems, hasShownStatic]);
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -125,8 +127,8 @@ const HomePage = () => {
       {/* Carousel Section con animación fade */}
       <div className="relative w-full h-[85vh] md:h-[90vh] lg:h-[93vh] overflow-hidden">
         <AnimatePresence mode="wait">
-          {carouselItems.length > 0 && showStaticBanner ? (
-            // Banner estático con animación
+          {carouselItems.length > 0 && showStaticBanner && !hasShownStatic ? (
+            // Banner estático con animación (solo se muestra UNA VEZ)
             <motion.div
               key="static-banner"
               initial={{ opacity: 0 }}
@@ -140,17 +142,11 @@ const HomePage = () => {
                 className="h-full w-full object-cover"
                 alt="slider fallback"
               />
-              <motion.div
-                className="absolute top-0 left-0 w-full h-full text-white bg-black/50 hidden lg:block"
-                initial="hidden"
-                animate="visible"
-                variants={fadeInVariants}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <div className="flex justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-20">
-                  <div className="max-w-2xl space-y-6">
+              <div className="absolute top-0 left-0 w-full h-full text-white bg-black/40">
+                <div className="flex justify-center lg:justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
+                  <div className="max-w-2xl space-y-4 sm:space-y-6 text-center lg:text-left">
                     <motion.div
-                      className="inline-block px-6 py-3 bg-[#e7b617] text-white font-bold text-lg uppercase rounded-lg shadow-lg"
+                      className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-[#e7b617] text-white font-bold text-sm sm:text-lg uppercase rounded-lg shadow-lg"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
@@ -159,7 +155,7 @@ const HomePage = () => {
                       Corporación R&L
                     </motion.div>
                     <motion.h1
-                      className="text-4xl sm:text-6xl font-extrabold leading-tight"
+                      className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-tight"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
@@ -169,7 +165,7 @@ const HomePage = () => {
                       <span className="block text-orange-400">de Calidad</span>
                     </motion.h1>
                     <motion.p
-                      className="text-xl text-gray-200 max-w-lg"
+                      className="text-base sm:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
@@ -179,20 +175,20 @@ const HomePage = () => {
                       Calidad y Eficiencia en cada proyecto.
                     </motion.p>
                     <motion.div
-                      className="flex flex-col sm:flex-row gap-4"
+                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
                       transition={{ duration: 0.8, delay: 0.6 }}
                     >
                       <Link href="/Productos">
-                        <div className="group inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-[#e7b617] hover:bg-[#d4a515] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
                           <span>Ver Productos</span>
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </Link>
                       <Link href="/Contacto">
-                        <div className="group inline-flex items-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
+                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
                           <span>Cotizar Ahora</span>
                           <Phone className="ml-2 w-5 h-5" />
                         </div>
@@ -200,7 +196,7 @@ const HomePage = () => {
                     </motion.div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           ) : carouselItems.length > 0 ? (
             // BannerPrincipal (carrusel) con animación
@@ -228,17 +224,11 @@ const HomePage = () => {
                 className="h-full w-full object-cover"
                 alt="slider fallback"
               />
-              <motion.div
-                className="absolute top-0 left-0 w-full h-full text-white bg-black/50 hidden lg:block"
-                initial="hidden"
-                animate="visible"
-                variants={fadeInVariants}
-                transition={{ duration: 0.8, delay: 0.2 }}
-              >
-                <div className="flex justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-20">
-                  <div className="max-w-2xl space-y-6">
+              <div className="absolute top-0 left-0 w-full h-full text-white bg-black/40">
+                <div className="flex justify-center lg:justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
+                  <div className="max-w-2xl space-y-4 sm:space-y-6 text-center lg:text-left">
                     <motion.div
-                      className="inline-block px-6 py-3 bg-[#e7b617] text-white font-bold text-lg uppercase rounded-lg shadow-lg"
+                      className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-[#e7b617] text-white font-bold text-sm sm:text-lg uppercase rounded-lg shadow-lg"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
@@ -247,7 +237,7 @@ const HomePage = () => {
                       Corporación R&L
                     </motion.div>
                     <motion.h1
-                      className="text-4xl sm:text-6xl font-extrabold leading-tight"
+                      className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-tight"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
@@ -257,7 +247,7 @@ const HomePage = () => {
                       <span className="block text-orange-400">de Calidad</span>
                     </motion.h1>
                     <motion.p
-                      className="text-xl text-gray-200 max-w-lg"
+                      className="text-base sm:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
@@ -267,20 +257,20 @@ const HomePage = () => {
                       Calidad y Eficiencia en cada proyecto.
                     </motion.p>
                     <motion.div
-                      className="flex flex-col sm:flex-row gap-4"
+                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
                       initial="hidden"
                       animate="visible"
                       variants={fadeInVariants}
                       transition={{ duration: 0.8, delay: 0.6 }}
                     >
                       <Link href="/Productos">
-                        <div className="group inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-[#e7b617] hover:bg-[#d4a515] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
                           <span>Ver Productos</span>
                           <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                         </div>
                       </Link>
                       <Link href="/Contacto">
-                        <div className="group inline-flex items-center px-8 py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
+                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
                           <span>Cotizar Ahora</span>
                           <Phone className="ml-2 w-5 h-5" />
                         </div>
@@ -288,7 +278,7 @@ const HomePage = () => {
                     </motion.div>
                   </div>
                 </div>
-              </motion.div>
+              </div>
             </motion.div>
           )}
         </AnimatePresence>
