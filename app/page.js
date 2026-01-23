@@ -124,15 +124,14 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* Carousel Section con animación fade */}
+      {/* Carousel Section - SIN parpadeo */}
       <div className="relative w-full h-[85vh] md:h-[90vh] lg:h-[93vh] overflow-hidden">
         <AnimatePresence mode="wait">
           {carouselItems.length > 0 && showStaticBanner && !hasShownStatic ? (
-            // Banner estático con animación (solo se muestra UNA VEZ)
+            // Banner estático (solo se muestra UNA VEZ) - SIN animación inicial para evitar parpadeo
             <motion.div
               key="static-banner"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
+              initial={{ opacity: 1 }}
               exit={{ opacity: 0 }}
               transition={{ duration: 1 }}
               className="relative w-full h-full"
@@ -147,39 +146,35 @@ const HomePage = () => {
                   <div className="max-w-2xl space-y-4 sm:space-y-6 text-center lg:text-left">
                     <motion.div
                       className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-[#e7b617] text-white font-bold text-sm sm:text-lg uppercase rounded-lg shadow-lg"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.3 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
                     >
                       Corporación R&L
                     </motion.div>
                     <motion.h1
                       className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-tight"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.4 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.3 }}
                     >
                       Maquinaria Industrial
                       <span className="block text-orange-400">de Calidad</span>
                     </motion.h1>
                     <motion.p
                       className="text-base sm:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.5 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.4 }}
                     >
                       Más de 6 años de experiencia en el mercado peruano. Garantía,
                       Calidad y Eficiencia en cada proyecto.
                     </motion.p>
                     <motion.div
                       className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.6 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.5 }}
                     >
                       <Link href="/Productos">
                         <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-[#e7b617] hover:bg-[#d4a515] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
@@ -214,7 +209,7 @@ const HomePage = () => {
             // Fallback solo imagen estática (cuando no hay carrusel cargado)
             <motion.div
               key="fallback-banner"
-              initial={{ opacity: 0 }}
+              initial={{ opacity: 1 }}
               animate={{ opacity: 1 }}
               transition={{ duration: 1 }}
               className="relative w-full h-full"
@@ -229,39 +224,35 @@ const HomePage = () => {
                   <div className="max-w-2xl space-y-4 sm:space-y-6 text-center lg:text-left">
                     <motion.div
                       className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-[#e7b617] text-white font-bold text-sm sm:text-lg uppercase rounded-lg shadow-lg"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.3 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.2 }}
                     >
                       Corporación R&L
                     </motion.div>
                     <motion.h1
                       className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-tight"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.4 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.3 }}
                     >
                       Maquinaria Industrial
                       <span className="block text-orange-400">de Calidad</span>
                     </motion.h1>
                     <motion.p
                       className="text-base sm:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.5 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.4 }}
                     >
                       Más de 6 años de experiencia en el mercado peruano. Garantía,
                       Calidad y Eficiencia en cada proyecto.
                     </motion.p>
                     <motion.div
                       className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-                      initial="hidden"
-                      animate="visible"
-                      variants={fadeInVariants}
-                      transition={{ duration: 0.8, delay: 0.6 }}
+                      initial={{ opacity: 0, y: 20 }}
+                      animate={{ opacity: 1, y: 0 }}
+                      transition={{ duration: 0.6, delay: 0.5 }}
                     >
                       <Link href="/Productos">
                         <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-[#e7b617] hover:bg-[#d4a515] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
