@@ -24,14 +24,6 @@ const HomePage = () => {
   const [categorias, setCategorias] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [carouselItems, setCarouselItems] = useState([]);
-  const [showStaticBanner, setShowStaticBanner] = useState(true);
-  const [hasShownStatic, setHasShownStatic] = useState(false);
-
-  const BannerInicio = [
-    {
-      imagen: "/Banner.webp",
-    },
-  ];
 
   const fadeInVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -47,18 +39,6 @@ const HomePage = () => {
       },
     },
   };
-
-  // Mostrar banner estático solo UNA VEZ al inicio
-  useEffect(() => {
-    if (carouselItems.length > 0 && !hasShownStatic) {
-      const timer = setTimeout(() => {
-        setShowStaticBanner(false);
-        setHasShownStatic(true);
-      }, 6000); // Muestra el banner estático por 6 segundos solo la primera vez
-
-      return () => clearTimeout(timer);
-    }
-  }, [carouselItems, hasShownStatic]);
 
   useEffect(() => {
     const loadAllData = async () => {
@@ -124,155 +104,18 @@ const HomePage = () => {
 
   return (
     <div>
-      {/* Carousel Section - SIN parpadeo */}
+      {/* Carousel Section */}
       <div className="relative w-full h-[85vh] md:h-[90vh] lg:h-[93vh] overflow-hidden">
-        <AnimatePresence mode="wait">
-          {carouselItems.length > 0 && showStaticBanner && !hasShownStatic ? (
-            // Banner estático (solo se muestra UNA VEZ) - SIN animación inicial para evitar parpadeo
-            <motion.div
-              key="static-banner"
-              initial={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              className="relative w-full h-full"
-            >
-              <img
-                src={BannerInicio[0].imagen || ""}
-                className="h-full w-full object-cover"
-                alt="slider fallback"
-              />
-              <div className="absolute top-0 left-0 w-full h-full text-white bg-black/40">
-                <div className="flex justify-center lg:justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
-                  <div className="max-w-2xl space-y-4 sm:space-y-6 text-center lg:text-left">
-                    <motion.div
-                      className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-[#e7b617] text-white font-bold text-sm sm:text-lg uppercase rounded-lg shadow-lg"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                      Corporación R&L
-                    </motion.div>
-                    <motion.h1
-                      className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-tight"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                    >
-                      Maquinaria Industrial
-                      <span className="block text-orange-400">de Calidad</span>
-                    </motion.h1>
-                    <motion.p
-                      className="text-base sm:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.4 }}
-                    >
-                      Más de 6 años de experiencia en el mercado peruano. Garantía,
-                      Calidad y Eficiencia en cada proyecto.
-                    </motion.p>
-                    <motion.div
-                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.5 }}
-                    >
-                      <Link href="/Productos">
-                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-[#e7b617] hover:bg-[#d4a515] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
-                          <span>Ver Productos</span>
-                          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </Link>
-                      <Link href="/Contacto">
-                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
-                          <span>Cotizar Ahora</span>
-                          <Phone className="ml-2 w-5 h-5" />
-                        </div>
-                      </Link>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          ) : carouselItems.length > 0 ? (
-            // BannerPrincipal (carrusel) con animación
-            <motion.div
-              key="carousel-banner"
-              initial={{ opacity: 0 }}
-              animate={{ opacity: 1 }}
-              exit={{ opacity: 0 }}
-              transition={{ duration: 1 }}
-              className="w-full h-full"
-            >
-              <BannerPrincipal items={carouselItems} />
-            </motion.div>
-          ) : (
-            // Fallback solo imagen estática (cuando no hay carrusel cargado)
-            <motion.div
-              key="fallback-banner"
-              initial={{ opacity: 1 }}
-              animate={{ opacity: 1 }}
-              transition={{ duration: 1 }}
-              className="relative w-full h-full"
-            >
-              <img
-                src={BannerInicio[0].imagen || ""}
-                className="h-full w-full object-cover"
-                alt="slider fallback"
-              />
-              <div className="absolute top-0 left-0 w-full h-full text-white bg-black/40">
-                <div className="flex justify-center lg:justify-start items-center h-full max-w-7xl mx-auto px-4 sm:px-6 lg:px-20">
-                  <div className="max-w-2xl space-y-4 sm:space-y-6 text-center lg:text-left">
-                    <motion.div
-                      className="inline-block px-4 sm:px-6 py-2 sm:py-3 bg-[#e7b617] text-white font-bold text-sm sm:text-lg uppercase rounded-lg shadow-lg"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.2 }}
-                    >
-                      Corporación R&L
-                    </motion.div>
-                    <motion.h1
-                      className="text-3xl sm:text-4xl lg:text-6xl font-extrabold leading-tight"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.3 }}
-                    >
-                      Maquinaria Industrial
-                      <span className="block text-orange-400">de Calidad</span>
-                    </motion.h1>
-                    <motion.p
-                      className="text-base sm:text-xl text-gray-200 max-w-lg mx-auto lg:mx-0"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.4 }}
-                    >
-                      Más de 6 años de experiencia en el mercado peruano. Garantía,
-                      Calidad y Eficiencia en cada proyecto.
-                    </motion.p>
-                    <motion.div
-                      className="flex flex-col sm:flex-row gap-3 sm:gap-4 justify-center lg:justify-start"
-                      initial={{ opacity: 0, y: 20 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      transition={{ duration: 0.6, delay: 0.5 }}
-                    >
-                      <Link href="/Productos">
-                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 bg-[#e7b617] hover:bg-[#d4a515] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
-                          <span>Ver Productos</span>
-                          <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
-                        </div>
-                      </Link>
-                      <Link href="/Contacto">
-                        <div className="group inline-flex items-center justify-center px-6 sm:px-8 py-3 sm:py-4 border-2 border-white text-white hover:bg-white hover:text-gray-800 font-semibold rounded-lg transition-all duration-300">
-                          <span>Cotizar Ahora</span>
-                          <Phone className="ml-2 w-5 h-5" />
-                        </div>
-                      </Link>
-                    </motion.div>
-                  </div>
-                </div>
-              </div>
-            </motion.div>
-          )}
-        </AnimatePresence>
+        {carouselItems.length > 0 ? (
+          <BannerPrincipal items={carouselItems} />
+        ) : (
+          <div className="flex items-center justify-center w-full h-full bg-gray-200">
+            <div className="text-center">
+              <Loader2 className="h-12 w-12 animate-spin text-[#e7b617] mx-auto mb-4" />
+              <p className="text-gray-600">Cargando banner...</p>
+            </div>
+          </div>
+        )}
       </div>
 
       {/* Valores Section */}
