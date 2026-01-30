@@ -18,7 +18,7 @@ import {
 } from "lucide-react";
 
 import BannerPrincipal from "@/components/BannerPrincipal";
-import ModalShowProducto from "@/components/ModalShowProducto";
+import ModalShowProducto from "./Productos/ModalShowProducto";
 
 const HomePage = () => {
   const [productosDestacados, setProductosDestacados] = useState([]);
