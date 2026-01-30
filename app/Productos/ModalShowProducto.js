@@ -33,6 +33,11 @@ const ModalShowProducto = ({
 }) => {
   const NewArray = product?.ImagenesGenerales || [];
 
+  // Debug: Ver si la ficha técnica existe
+  console.log('Producto:', product);
+  console.log('FichaTecnica:', product?.FichaTecnica);
+  console.log('URLPDf:', product?.FichaTecnica?.URLPDf);
+
   // Información de contacto de la empresa - ACTUALIZADA
   const CONTACT_INFO = {
     phone: "+51 960 040 522",
@@ -43,12 +48,25 @@ const ModalShowProducto = ({
 
   // Categoria del producto
   const categoriaProducto =
-    categories.find((category) => category.id === product?.Categoria) || {};
+    categories?.find((category) => category.id === product?.Categoria) || {};
 
   // Función para descargar ficha técnica
   const downloadFichaTecnica = () => {
     if (product?.FichaTecnica?.URLPDf) {
-      window.open(product.FichaTecnica.URLPDf, "_blank");
+      // Abrir en nueva pestaña
+      const link = document.createElement('a');
+      link.href = product.FichaTecnica.URLPDf;
+      link.target = '_blank';
+      link.rel = 'noopener noreferrer';
+      
+      // Si tiene nombre, usarlo para la descarga
+      if (product.FichaTecnica.name) {
+        link.download = product.FichaTecnica.name;
+      }
+      
+      document.body.appendChild(link);
+      link.click();
+      document.body.removeChild(link);
     }
   };
 
@@ -218,7 +236,7 @@ const ModalShowProducto = ({
               </div>
 
               {/* Ficha Técnica */}
-              {product?.FichaTecnica && (
+              {product?.FichaTecnica?.URLPDf && (
                 <div className="border border-blue-200 rounded-lg p-4 bg-blue-50">
                   <div className="flex items-center justify-between">
                     <div className="flex items-center gap-2">
@@ -228,7 +246,7 @@ const ModalShowProducto = ({
                           Ficha Técnica
                         </h3>
                         <p className="text-sm text-blue-700">
-                          {product.FichaTecnica.name}
+                          {product.FichaTecnica?.name || "Documento técnico"}
                         </p>
                       </div>
                     </div>
