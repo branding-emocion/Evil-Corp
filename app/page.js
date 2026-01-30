@@ -18,12 +18,17 @@ import {
 } from "lucide-react";
 
 import BannerPrincipal from "@/components/BannerPrincipal";
+import ModalShowProducto from "@/components/ModalShowProducto";
 
 const HomePage = () => {
   const [productosDestacados, setProductosDestacados] = useState([]);
   const [categorias, setCategorias] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
   const [carouselItems, setCarouselItems] = useState([]);
+  const [showModalProductos, setShowModalProductos] = useState({
+    Visible: false,
+    Producto: {},
+  });
 
   const fadeInVariants = {
     hidden: { opacity: 0, y: 30 },
@@ -100,6 +105,13 @@ const HomePage = () => {
       return producto.Variantes[0]?.url;
     }
     return "";
+  };
+
+  const handleVerDetalles = (producto) => {
+    setShowModalProductos({
+      Visible: true,
+      Producto: producto,
+    });
   };
 
   return (
@@ -243,12 +255,13 @@ const HomePage = () => {
                       />
                     )}
                     <div className="flex items-center justify-between">
-                      <Link href={`/Productos?${producto.id}`}>
-                        <button className="text-[#e7b617] hover:text-[#e7b617] font-semibold text-sm flex items-center group">
-                          Ver detalles
-                          <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
-                        </button>
-                      </Link>
+                      <button
+                        onClick={() => handleVerDetalles(producto)}
+                        className="text-[#e7b617] hover:text-[#d4a615] font-semibold text-sm flex items-center group"
+                      >
+                        Ver detalles
+                        <ArrowRight className="w-4 h-4 ml-1 group-hover:translate-x-1 transition-transform" />
+                      </button>
                       <ArrowRight className="w-5 h-5 text-[#e7b617] group-hover:translate-x-1 transition-transform" />
                     </div>
                   </div>
@@ -278,7 +291,7 @@ const HomePage = () => {
             variants={fadeInVariants}
           >
             <Link href="/Productos">
-              <div className="inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#e7b617] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
+              <div className="inline-flex items-center px-8 py-4 bg-[#e7b617] hover:bg-[#d4a615] text-white font-semibold rounded-lg transition-all duration-300 hover:scale-105 shadow-lg">
                 <span>Ver Todos los Productos</span>
                 <ArrowRight className="ml-2 w-5 h-5" />
               </div>
@@ -357,7 +370,7 @@ const HomePage = () => {
                     Explora nuestra amplia gama de maquinaria industrial: grupos
                     electrógenos, compresores, equipos de construcción y más.
                   </p>
-                  <div className="flex items-center text-[#e7b617] font-semibold group-hover:text-[#e7b617]">
+                  <div className="flex items-center text-[#e7b617] font-semibold group-hover:text-[#d4a615]">
                     <span>Ver productos</span>
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -399,7 +412,7 @@ const HomePage = () => {
                     ¿Necesitas una cotización o tienes preguntas? Nuestro equipo
                     está listo para ayudarte con tu proyecto.
                   </p>
-                  <div className="flex items-center text-[#e7b617] font-semibold group-hover:text-[#e7b617]">
+                  <div className="flex items-center text-[#e7b617] font-semibold group-hover:text-[#d4a615]">
                     <span>Contáctanos</span>
                     <ArrowRight className="ml-2 w-5 h-5 group-hover:translate-x-1 transition-transform" />
                   </div>
@@ -409,6 +422,14 @@ const HomePage = () => {
           </motion.div>
         </div>
       </section>
+
+      {/* Modal de Producto */}
+      <ModalShowProducto
+        product={showModalProductos.Producto}
+        ShowModalProductos={showModalProductos}
+        setShowModalProductos={setShowModalProductos}
+        categories={categorias}
+      />
     </div>
   );
 };
