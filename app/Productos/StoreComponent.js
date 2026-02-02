@@ -16,7 +16,7 @@ import {
 import ModalShowProducto from "./ModalShowProducto";
 import Image from "next/image";
 
-export default function StoreComponent({ products, categories }) {
+export default function StoreComponent({ products, categories, timestamp }) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [selectedCategory, setSelectedCategory] = useState("Todos");
@@ -132,12 +132,13 @@ export default function StoreComponent({ products, categories }) {
                 /> */}
                 <figure className="relative w-full h-48 mb-4">
                   <Image
-                    src={product.ImagenesGenerales[0]}
+                    src={`${product.ImagenesGenerales[0]}?t=${timestamp || Date.now()}`}
                     alt={product.NombreProducto}
                     style={{
                       objectFit: "contain",
                     }}
                     fill
+                    unoptimized
                   />
                 </figure>
                 <h3 className="font-bold text-lg">{product?.NombreProducto}</h3>
