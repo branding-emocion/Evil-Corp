@@ -11,7 +11,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
 const Contacto = () => {
-  const [InputValues, setInputValues] = useState({});
+  const [InputValues, setInputValues] = useState<any>({});
   const [IsLoading, setIsLoading] = useState(false);
 
   const sectionVariants = {
@@ -109,12 +109,76 @@ const Contacto = () => {
                   <h3 className="text-xl font-bold mb-4 text-gray-800">
                     Escríbenos
                   </h3>
-                  <a
-                    href="mailto:VENTAS@CORPORACIONRYL.COM"
-                    className="text-gray-600 hover:text-[#e7b617] transition-colors"
-                  >
-                    VENTAS@CORPORACIONRYL.COM
-                  </a>
+
+                  {/* ✅ Correos agregados (sin quitar el anterior) */}
+                  <div className="space-y-3 text-sm">
+                    <div>
+                      <p className="font-semibold text-gray-800">Ventas 1</p>
+                      <a
+                        href="mailto:ventas@corporacionryl.com"
+                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
+                      >
+                        ventas@corporacionryl.com
+                      </a>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-gray-800">Ventas 2</p>
+                      <a
+                        href="mailto:n.aguilar@corporacionryl.com"
+                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
+                      >
+                        n.aguilar@corporacionryl.com
+                      </a>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-gray-800">
+                        Departamento de proyectos
+                      </p>
+                      <a
+                        href="mailto:dpto.proyectos@corporacionryl.com"
+                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
+                      >
+                        dpto.proyectos@corporacionryl.com
+                      </a>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-gray-800">
+                        Servicio Técnico Eléctrico
+                      </p>
+                      <a
+                        href="mailto:alexbautista.tecnicoelectrico@corporacionryl.com"
+                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
+                      >
+                        alexbautista.tecnicoelectrico@corporacionryl.com
+                      </a>
+                    </div>
+
+                    <div>
+                      <p className="font-semibold text-gray-800">
+                        Servicio Técnico Mecánico
+                      </p>
+                      <a
+                        href="mailto:andre.servmantenimiento@corporacionryl.com"
+                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
+                      >
+                        andre.servmantenimiento@corporacionryl.com
+                      </a>
+                    </div>
+
+                    {/* Mantengo el correo anterior también */}
+                    <div className="pt-2 border-t border-gray-200">
+                      <p className="font-semibold text-gray-800">Correo general</p>
+                      <a
+                        href="mailto:VENTAS@CORPORACIONRYL.COM"
+                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
+                      >
+                        VENTAS@CORPORACIONRYL.COM
+                      </a>
+                    </div>
+                  </div>
                 </CardContent>
               </Card>
             </motion.div>
@@ -159,14 +223,79 @@ const Contacto = () => {
                       <div className="w-12 h-12 bg-[#006039] rounded-lg flex items-center justify-center flex-shrink-0">
                         <Mail className="w-6 h-6 text-white" />
                       </div>
-                      <div>
-                        <h4 className="font-semibold mb-1">Email</h4>
-                        <a
-                          href="mailto:VENTAS@CORPORACIONRYL.COM"
-                          className="text-gray-300 hover:text-orange-400 transition-colors"
-                        >
-                          VENTAS@CORPORACIONRYL.COM
-                        </a>
+                      <div className="w-full">
+                        <h4 className="font-semibold mb-2">Email</h4>
+
+                        {/* ✅ Correos agregados (sin quitar el anterior) */}
+                        <div className="space-y-3 text-gray-300">
+                          <div>
+                            <p className="text-white/90 font-semibold">Ventas 1</p>
+                            <a
+                              href="mailto:ventas@corporacionryl.com"
+                              className="hover:text-orange-400 transition-colors break-words"
+                            >
+                              ventas@corporacionryl.com
+                            </a>
+                          </div>
+
+                          <div>
+                            <p className="text-white/90 font-semibold">Ventas 2</p>
+                            <a
+                              href="mailto:n.aguilar@corporacionryl.com"
+                              className="hover:text-orange-400 transition-colors break-words"
+                            >
+                              n.aguilar@corporacionryl.com
+                            </a>
+                          </div>
+
+                          <div>
+                            <p className="text-white/90 font-semibold">
+                              Departamento de proyectos
+                            </p>
+                            <a
+                              href="mailto:dpto.proyectos@corporacionryl.com"
+                              className="hover:text-orange-400 transition-colors break-words"
+                            >
+                              dpto.proyectos@corporacionryl.com
+                            </a>
+                          </div>
+
+                          <div>
+                            <p className="text-white/90 font-semibold">
+                              Servicio Técnico Eléctrico
+                            </p>
+                            <a
+                              href="mailto:alexbautista.tecnicoelectrico@corporacionryl.com"
+                              className="hover:text-orange-400 transition-colors break-words"
+                            >
+                              alexbautista.tecnicoelectrico@corporacionryl.com
+                            </a>
+                          </div>
+
+                          <div>
+                            <p className="text-white/90 font-semibold">
+                              Servicio Técnico Mecánico
+                            </p>
+                            <a
+                              href="mailto:andre.servmantenimiento@corporacionryl.com"
+                              className="hover:text-orange-400 transition-colors break-words"
+                            >
+                              andre.servmantenimiento@corporacionryl.com
+                            </a>
+                          </div>
+
+                          <div className="pt-2 border-t border-green-700">
+                            <p className="text-white/90 font-semibold">
+                              Correo general
+                            </p>
+                            <a
+                              href="mailto:VENTAS@CORPORACIONRYL.COM"
+                              className="hover:text-orange-400 transition-colors break-words"
+                            >
+                              VENTAS@CORPORACIONRYL.COM
+                            </a>
+                          </div>
+                        </div>
                       </div>
                     </div>
 
@@ -252,7 +381,7 @@ const Contacto = () => {
                   </p>
 
                   <form
-                    onSubmit={async (e) => {
+                    onSubmit={async (e: any) => {
                       e.preventDefault();
                       try {
                         setIsLoading(true);
