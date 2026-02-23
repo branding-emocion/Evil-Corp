@@ -29,7 +29,6 @@ const Contacto = () => {
       {/* Hero Section */}
       <section className="relative">
         <div className="relative w-full h-[500px] z-[1] overflow-hidden bg-[#e7b617]">
-          {/* Espacio para imagen de fondo */}
           <div className="absolute inset-0 bg-black/30"></div>
           <div className="relative h-full flex items-center justify-center text-center px-4">
             <motion.div
@@ -72,7 +71,7 @@ const Contacto = () => {
           className="-mt-32 container mx-auto py-12 px-4 relative z-[2]"
         >
           <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-            {/* Contact Info Cards */}
+            {/* Card Llámanos */}
             <motion.div variants={cardVariants} transition={{ delay: 0.1 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
@@ -83,13 +82,13 @@ const Contacto = () => {
                     Llámanos
                   </h3>
                   <div className="space-y-2">
-                    <a
+                    
                       href="tel:+51960040522"
                       className="block text-gray-600 hover:text-[#e7b617] transition-colors"
                     >
                       960 040 522
                     </a>
-                    <a
+                    
                       href="tel:+51967447382"
                       className="block text-gray-600 hover:text-[#e7b617] transition-colors"
                     >
@@ -100,7 +99,7 @@ const Contacto = () => {
               </Card>
             </motion.div>
 
-            {/* ✅ AQUÍ se agregan correos en "Escríbenos" (sin cambiar diseño general) */}
+            {/* Card Escríbenos - SIN servicios técnicos */}
             <motion.div variants={cardVariants} transition={{ delay: 0.2 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
@@ -110,67 +109,39 @@ const Contacto = () => {
                   <h3 className="text-xl font-bold mb-4 text-gray-800">
                     Escríbenos
                   </h3>
-
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="font-semibold text-gray-800">Ventas 1</p>
-                      <a
+                      
                         href="mailto:ventas@corporacionryl.com"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
                         ventas@corporacionryl.com
                       </a>
                     </div>
-
                     <div>
                       <p className="font-semibold text-gray-800">Ventas 2</p>
-                      <a
+                      
                         href="mailto:n.aguilar@corporacionryl.com"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
                         n.aguilar@corporacionryl.com
                       </a>
                     </div>
-
                     <div>
                       <p className="font-semibold text-gray-800">
                         Departamento de proyectos
                       </p>
-                      <a
+                      
                         href="mailto:dpto.proyectos@corporacionryl.com"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
                         dpto.proyectos@corporacionryl.com
                       </a>
                     </div>
-
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        Servicio Técnico Eléctrico
-                      </p>
-                      <a
-                        href="mailto:alexbautista.tecnicoelectrico@corporacionryl.com"
-                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
-                      >
-                        alexbautista.tecnicoelectrico@corporacionryl.com
-                      </a>
-                    </div>
-
-                    <div>
-                      <p className="font-semibold text-gray-800">
-                        Servicio Técnico Mecánico
-                      </p>
-                      <a
-                        href="mailto:andre.servmantenimiento@corporacionryl.com"
-                        className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
-                      >
-                        andre.servmantenimiento@corporacionryl.com
-                      </a>
-                    </div>
-
                     <div className="pt-2 border-t border-gray-200">
                       <p className="font-semibold text-gray-800">Correo general</p>
-                      <a
+                      
                         href="mailto:VENTAS@CORPORACIONRYL.COM"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
@@ -182,6 +153,7 @@ const Contacto = () => {
               </Card>
             </motion.div>
 
+            {/* Card Visítanos */}
             <motion.div variants={cardVariants} transition={{ delay: 0.3 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
@@ -205,7 +177,7 @@ const Contacto = () => {
 
           {/* Main Contact Section */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            {/* Contact Information */}
+            {/* Panel verde - Información de Contacto - SIN servicios técnicos */}
             <motion.div
               variants={cardVariants}
               transition={{ delay: 0.4 }}
@@ -216,76 +188,46 @@ const Contacto = () => {
                   <h2 className="text-3xl font-bold mb-8">
                     Información de Contacto
                   </h2>
-
                   <div className="space-y-6">
-                    {/* ✅ AQUÍ se agregan correos en "Información de Contacto" */}
                     <div className="flex items-start space-x-4">
                       <div className="w-12 h-12 bg-[#006039] rounded-lg flex items-center justify-center flex-shrink-0">
                         <Mail className="w-6 h-6 text-white" />
                       </div>
                       <div className="w-full">
                         <h4 className="font-semibold mb-2">Email</h4>
-
                         <div className="space-y-3">
                           <div>
                             <p className="text-white/90 font-semibold">Ventas 1</p>
-                            <a
+                            
                               href="mailto:ventas@corporacionryl.com"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
                               ventas@corporacionryl.com
                             </a>
                           </div>
-
                           <div>
                             <p className="text-white/90 font-semibold">Ventas 2</p>
-                            <a
+                            
                               href="mailto:n.aguilar@corporacionryl.com"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
                               n.aguilar@corporacionryl.com
                             </a>
                           </div>
-
                           <div>
                             <p className="text-white/90 font-semibold">
                               Departamento de proyectos
                             </p>
-                            <a
+                            
                               href="mailto:dpto.proyectos@corporacionryl.com"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
                               dpto.proyectos@corporacionryl.com
                             </a>
                           </div>
-
-                          <div>
-                            <p className="text-white/90 font-semibold">
-                              Servicio Técnico Eléctrico
-                            </p>
-                            <a
-                              href="mailto:alexbautista.tecnicoelectrico@corporacionryl.com"
-                              className="text-gray-300 hover:text-orange-400 transition-colors break-words"
-                            >
-                              alexbautista.tecnicoelectrico@corporacionryl.com
-                            </a>
-                          </div>
-
-                          <div>
-                            <p className="text-white/90 font-semibold">
-                              Servicio Técnico Mecánico
-                            </p>
-                            <a
-                              href="mailto:andre.servmantenimiento@corporacionryl.com"
-                              className="text-gray-300 hover:text-orange-400 transition-colors break-words"
-                            >
-                              andre.servmantenimiento@corporacionryl.com
-                            </a>
-                          </div>
-
                           <div className="pt-2 border-t border-green-700">
                             <p className="text-white/90 font-semibold">Correo general</p>
-                            <a
+                            
                               href="mailto:VENTAS@CORPORACIONRYL.COM"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
@@ -303,13 +245,13 @@ const Contacto = () => {
                       <div>
                         <h4 className="font-semibold mb-1">Teléfonos</h4>
                         <div className="space-y-1">
-                          <a
+                          
                             href="tel:+51960040522"
                             className="block text-gray-300 hover:text-orange-400 transition-colors"
                           >
                             960 040 522
                           </a>
-                          <a
+                          
                             href="tel:+51967447382"
                             className="block text-gray-300 hover:text-orange-400 transition-colors"
                           >
@@ -361,7 +303,7 @@ const Contacto = () => {
               </Card>
             </motion.div>
 
-            {/* Contact Form (NO CAMBIÉ DISEÑO) */}
+            {/* Formulario de contacto */}
             <motion.div
               variants={cardVariants}
               transition={{ delay: 0.5 }}
@@ -376,7 +318,6 @@ const Contacto = () => {
                     Completa el formulario y nos pondremos en contacto contigo
                     lo antes posible.
                   </p>
-
                   <form
                     onSubmit={async (e) => {
                       e.preventDefault();
@@ -386,7 +327,6 @@ const Contacto = () => {
                           alert("Por favor, rellene todos los campos");
                           return;
                         }
-
                         if (!InputValues?.NumeroCelular) {
                           alert("Por favor, ingrese su número de celular");
                           return;
@@ -401,14 +341,11 @@ const Contacto = () => {
                             destinationEmail: "VENTAS@CORPORACIONRYL.COM",
                           }),
                         });
-
                         const responseData = await response.json();
-
                         if (!response.ok) {
                           alert("Error al enviar el mensaje");
                           return;
                         }
-
                         alert("Mensaje enviado con éxito");
                         setInputValues({});
                         e.target.reset();
@@ -547,7 +484,7 @@ const Contacto = () => {
                           <span>Enviando...</span>
                         </div>
                       ) : (
-                        <div className="flex items-center space-x-2 ">
+                        <div className="flex items-center space-x-2">
                           <Send className="w-5 h-5" />
                           <span>Enviar Mensaje</span>
                         </div>
