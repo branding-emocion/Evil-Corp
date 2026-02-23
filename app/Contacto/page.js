@@ -11,7 +11,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
 const Contacto = () => {
-  const [InputValues, setInputValues] = useState({});
+  const [InputValues, setInputValues] = useState<any>({});
   const [IsLoading, setIsLoading] = useState(false);
 
   const sectionVariants = {
@@ -80,13 +80,14 @@ const Contacto = () => {
                     Llámanos
                   </h3>
                   <div className="space-y-2">
-                    
+                    <a
                       href="tel:+51960040522"
                       className="block text-gray-600 hover:text-[#e7b617] transition-colors"
                     >
                       960 040 522
                     </a>
-                    
+
+                    <a
                       href="tel:+51967447382"
                       className="block text-gray-600 hover:text-[#e7b617] transition-colors"
                     >
@@ -110,7 +111,7 @@ const Contacto = () => {
                   <div className="space-y-3 text-sm">
                     <div>
                       <p className="font-semibold text-gray-800">Ventas 1</p>
-                      
+                      <a
                         href="mailto:ventas@corporacionryl.com"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
@@ -119,7 +120,7 @@ const Contacto = () => {
                     </div>
                     <div>
                       <p className="font-semibold text-gray-800">Ventas 2</p>
-                      
+                      <a
                         href="mailto:n.aguilar@corporacionryl.com"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
@@ -130,7 +131,7 @@ const Contacto = () => {
                       <p className="font-semibold text-gray-800">
                         Departamento de proyectos
                       </p>
-                      
+                      <a
                         href="mailto:dpto.proyectos@corporacionryl.com"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
@@ -138,8 +139,10 @@ const Contacto = () => {
                       </a>
                     </div>
                     <div className="pt-2 border-t border-gray-200">
-                      <p className="font-semibold text-gray-800">Correo general</p>
-                      
+                      <p className="font-semibold text-gray-800">
+                        Correo general
+                      </p>
+                      <a
                         href="mailto:VENTAS@CORPORACIONRYL.COM"
                         className="text-gray-600 hover:text-[#e7b617] transition-colors break-words"
                       >
@@ -195,8 +198,10 @@ const Contacto = () => {
                         <h4 className="font-semibold mb-2">Email</h4>
                         <div className="space-y-3">
                           <div>
-                            <p className="text-white/90 font-semibold">Ventas 1</p>
-                            
+                            <p className="text-white/90 font-semibold">
+                              Ventas 1
+                            </p>
+                            <a
                               href="mailto:ventas@corporacionryl.com"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
@@ -204,8 +209,10 @@ const Contacto = () => {
                             </a>
                           </div>
                           <div>
-                            <p className="text-white/90 font-semibold">Ventas 2</p>
-                            
+                            <p className="text-white/90 font-semibold">
+                              Ventas 2
+                            </p>
+                            <a
                               href="mailto:n.aguilar@corporacionryl.com"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
@@ -216,7 +223,7 @@ const Contacto = () => {
                             <p className="text-white/90 font-semibold">
                               Departamento de proyectos
                             </p>
-                            
+                            <a
                               href="mailto:dpto.proyectos@corporacionryl.com"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
@@ -224,8 +231,10 @@ const Contacto = () => {
                             </a>
                           </div>
                           <div className="pt-2 border-t border-green-700">
-                            <p className="text-white/90 font-semibold">Correo general</p>
-                            
+                            <p className="text-white/90 font-semibold">
+                              Correo general
+                            </p>
+                            <a
                               href="mailto:VENTAS@CORPORACIONRYL.COM"
                               className="text-gray-300 hover:text-orange-400 transition-colors break-words"
                             >
@@ -243,13 +252,13 @@ const Contacto = () => {
                       <div>
                         <h4 className="font-semibold mb-1">Teléfonos</h4>
                         <div className="space-y-1">
-                          
+                          <a
                             href="tel:+51960040522"
                             className="block text-gray-300 hover:text-orange-400 transition-colors"
                           >
                             960 040 522
                           </a>
-                          
+                          <a
                             href="tel:+51967447382"
                             className="block text-gray-300 hover:text-orange-400 transition-colors"
                           >
@@ -317,7 +326,7 @@ const Contacto = () => {
                     lo antes posible.
                   </p>
                   <form
-                    onSubmit={async (e) => {
+                    onSubmit={async (e: any) => {
                       e.preventDefault();
                       try {
                         setIsLoading(true);
@@ -337,7 +346,7 @@ const Contacto = () => {
                             destinationEmail: "VENTAS@CORPORACIONRYL.COM",
                           }),
                         });
-                        const responseData = await response.json();
+                        await response.json();
                         if (!response.ok) {
                           alert("Error al enviar el mensaje");
                           return;
@@ -356,7 +365,10 @@ const Contacto = () => {
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label htmlFor="NombreCompleto" className="text-sm font-medium text-gray-700">
+                        <Label
+                          htmlFor="NombreCompleto"
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Nombre Completo *
                         </Label>
                         <Input
@@ -368,12 +380,19 @@ const Contacto = () => {
                           required
                           className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
                           onChange={(e) =>
-                            setInputValues({ ...InputValues, NombreCompleto: e.target.value })
+                            setInputValues({
+                              ...InputValues,
+                              NombreCompleto: (e.target as HTMLInputElement)
+                                .value,
+                            })
                           }
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label htmlFor="email" className="text-sm font-medium text-gray-700">
+                        <Label
+                          htmlFor="email"
+                          className="text-sm font-medium text-gray-700"
+                        >
                           Correo Electrónico *
                         </Label>
                         <Input
@@ -384,14 +403,20 @@ const Contacto = () => {
                           autoComplete="off"
                           className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
                           onChange={(e) =>
-                            setInputValues({ ...InputValues, Correo: e.target.value })
+                            setInputValues({
+                              ...InputValues,
+                              Correo: (e.target as HTMLInputElement).value,
+                            })
                           }
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
+                      <Label
+                        htmlFor="phone"
+                        className="text-sm font-medium text-gray-700"
+                      >
                         Número de Celular *
                       </Label>
                       <PhoneInput
@@ -406,7 +431,10 @@ const Contacto = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="subject" className="text-sm font-medium text-gray-700">
+                      <Label
+                        htmlFor="subject"
+                        className="text-sm font-medium text-gray-700"
+                      >
                         Asunto *
                       </Label>
                       <Input
@@ -417,13 +445,19 @@ const Contacto = () => {
                         autoComplete="off"
                         className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
                         onChange={(e) =>
-                          setInputValues({ ...InputValues, Asunto: e.target.value })
+                          setInputValues({
+                            ...InputValues,
+                            Asunto: (e.target as HTMLInputElement).value,
+                          })
                         }
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label htmlFor="message" className="text-sm font-medium text-gray-700">
+                      <Label
+                        htmlFor="message"
+                        className="text-sm font-medium text-gray-700"
+                      >
                         Mensaje *
                       </Label>
                       <Textarea
@@ -434,7 +468,11 @@ const Contacto = () => {
                         autoComplete="off"
                         className="border-gray-300 focus:border-[#006039] focus:ring-[#006039] resize-none"
                         onChange={(e) =>
-                          setInputValues({ ...InputValues, Descripcion: e.target.value })
+                          setInputValues({
+                            ...InputValues,
+                            Descripcion: (e.target as HTMLTextAreaElement)
+                              .value,
+                          })
                         }
                       />
                     </div>
