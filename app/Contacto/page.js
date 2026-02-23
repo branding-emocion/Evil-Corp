@@ -11,7 +11,7 @@ import "react-phone-number-input/style.css";
 import PhoneInput from "react-phone-number-input";
 
 const Contacto = () => {
-  const [InputValues, setInputValues] = useState<any>({});
+  const [InputValues, setInputValues] = useState({});
   const [IsLoading, setIsLoading] = useState(false);
 
   const sectionVariants = {
@@ -326,7 +326,7 @@ const Contacto = () => {
                     lo antes posible.
                   </p>
                   <form
-                    onSubmit={async (e: any) => {
+                    onSubmit={async (e) => {
                       e.preventDefault();
                       try {
                         setIsLoading(true);
@@ -382,8 +382,7 @@ const Contacto = () => {
                           onChange={(e) =>
                             setInputValues({
                               ...InputValues,
-                              NombreCompleto: (e.target as HTMLInputElement)
-                                .value,
+                              NombreCompleto: e.target.value,
                             })
                           }
                         />
@@ -405,7 +404,7 @@ const Contacto = () => {
                           onChange={(e) =>
                             setInputValues({
                               ...InputValues,
-                              Correo: (e.target as HTMLInputElement).value,
+                              Correo: e.target.value,
                             })
                           }
                         />
@@ -421,8 +420,11 @@ const Contacto = () => {
                       </Label>
                       <PhoneInput
                         country="PE"
-                        onChange={(e) =>
-                          setInputValues({ ...InputValues, NumeroCelular: e })
+                        onChange={(value) =>
+                          setInputValues({
+                            ...InputValues,
+                            NumeroCelular: value,
+                          })
                         }
                         placeholder="Ingrese su número de celular"
                         value={InputValues?.NumeroCelular}
@@ -447,7 +449,7 @@ const Contacto = () => {
                         onChange={(e) =>
                           setInputValues({
                             ...InputValues,
-                            Asunto: (e.target as HTMLInputElement).value,
+                            Asunto: e.target.value,
                           })
                         }
                       />
@@ -470,8 +472,7 @@ const Contacto = () => {
                         onChange={(e) =>
                           setInputValues({
                             ...InputValues,
-                            Descripcion: (e.target as HTMLTextAreaElement)
-                              .value,
+                            Descripcion: e.target.value,
                           })
                         }
                       />
