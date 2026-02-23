@@ -26,7 +26,6 @@ const Contacto = () => {
 
   return (
     <div className="min-h-screen bg-white">
-      {/* Hero Section */}
       <section className="relative">
         <div className="relative w-full h-[500px] z-[1] overflow-hidden bg-[#e7b617]">
           <div className="absolute inset-0 bg-black/30"></div>
@@ -61,7 +60,6 @@ const Contacto = () => {
           </div>
         </div>
 
-        {/* Contact Cards */}
         <motion.div
           initial="hidden"
           whileInView="visible"
@@ -99,7 +97,7 @@ const Contacto = () => {
               </Card>
             </motion.div>
 
-            {/* Card Escríbenos - SIN servicios técnicos */}
+            {/* Card Escríbenos */}
             <motion.div variants={cardVariants} transition={{ delay: 0.2 }}>
               <Card className="h-full bg-white shadow-xl border-0 hover:shadow-2xl transition-all duration-300">
                 <CardContent className="p-8 text-center">
@@ -177,7 +175,7 @@ const Contacto = () => {
 
           {/* Main Contact Section */}
           <div className="grid grid-cols-1 lg:grid-cols-5 gap-8">
-            {/* Panel verde - Información de Contacto - SIN servicios técnicos */}
+            {/* Panel verde */}
             <motion.div
               variants={cardVariants}
               transition={{ delay: 0.4 }}
@@ -303,7 +301,7 @@ const Contacto = () => {
               </Card>
             </motion.div>
 
-            {/* Formulario de contacto */}
+            {/* Formulario */}
             <motion.div
               variants={cardVariants}
               transition={{ delay: 0.5 }}
@@ -333,9 +331,7 @@ const Contacto = () => {
                         }
                         const response = await fetch("/api/SendMailContacto", {
                           method: "POST",
-                          headers: {
-                            "Content-Type": "application/json",
-                          },
+                          headers: { "Content-Type": "application/json" },
                           body: JSON.stringify({
                             ...InputValues,
                             destinationEmail: "VENTAS@CORPORACIONRYL.COM",
@@ -360,10 +356,7 @@ const Contacto = () => {
                   >
                     <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
                       <div className="space-y-2">
-                        <Label
-                          htmlFor="NombreCompleto"
-                          className="text-sm font-medium text-gray-700"
-                        >
+                        <Label htmlFor="NombreCompleto" className="text-sm font-medium text-gray-700">
                           Nombre Completo *
                         </Label>
                         <Input
@@ -374,19 +367,13 @@ const Contacto = () => {
                           autoFocus
                           required
                           className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
-                          onChange={(e) => {
-                            setInputValues({
-                              ...InputValues,
-                              NombreCompleto: e.target.value,
-                            });
-                          }}
+                          onChange={(e) =>
+                            setInputValues({ ...InputValues, NombreCompleto: e.target.value })
+                          }
                         />
                       </div>
                       <div className="space-y-2">
-                        <Label
-                          htmlFor="email"
-                          className="text-sm font-medium text-gray-700"
-                        >
+                        <Label htmlFor="email" className="text-sm font-medium text-gray-700">
                           Correo Electrónico *
                         </Label>
                         <Input
@@ -396,31 +383,22 @@ const Contacto = () => {
                           placeholder="ejemplo@correo.com"
                           autoComplete="off"
                           className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
-                          onChange={(e) => {
-                            setInputValues({
-                              ...InputValues,
-                              Correo: e.target.value,
-                            });
-                          }}
+                          onChange={(e) =>
+                            setInputValues({ ...InputValues, Correo: e.target.value })
+                          }
                         />
                       </div>
                     </div>
 
                     <div className="space-y-2">
-                      <Label
-                        htmlFor="phone"
-                        className="text-sm font-medium text-gray-700"
-                      >
+                      <Label htmlFor="phone" className="text-sm font-medium text-gray-700">
                         Número de Celular *
                       </Label>
                       <PhoneInput
                         country="PE"
-                        onChange={(e) => {
-                          setInputValues({
-                            ...InputValues,
-                            NumeroCelular: e,
-                          });
-                        }}
+                        onChange={(e) =>
+                          setInputValues({ ...InputValues, NumeroCelular: e })
+                        }
                         placeholder="Ingrese su número de celular"
                         value={InputValues?.NumeroCelular}
                         className="phone-input-custom"
@@ -428,10 +406,7 @@ const Contacto = () => {
                     </div>
 
                     <div className="space-y-2">
-                      <Label
-                        htmlFor="subject"
-                        className="text-sm font-medium text-gray-700"
-                      >
+                      <Label htmlFor="subject" className="text-sm font-medium text-gray-700">
                         Asunto *
                       </Label>
                       <Input
@@ -441,20 +416,14 @@ const Contacto = () => {
                         required
                         autoComplete="off"
                         className="h-12 border-gray-300 focus:border-[#006039] focus:ring-[#006039]"
-                        onChange={(e) => {
-                          setInputValues({
-                            ...InputValues,
-                            Asunto: e.target.value,
-                          });
-                        }}
+                        onChange={(e) =>
+                          setInputValues({ ...InputValues, Asunto: e.target.value })
+                        }
                       />
                     </div>
 
                     <div className="space-y-2">
-                      <Label
-                        htmlFor="message"
-                        className="text-sm font-medium text-gray-700"
-                      >
+                      <Label htmlFor="message" className="text-sm font-medium text-gray-700">
                         Mensaje *
                       </Label>
                       <Textarea
@@ -464,12 +433,9 @@ const Contacto = () => {
                         rows={5}
                         autoComplete="off"
                         className="border-gray-300 focus:border-[#006039] focus:ring-[#006039] resize-none"
-                        onChange={(e) => {
-                          setInputValues({
-                            ...InputValues,
-                            Descripcion: e.target.value,
-                          });
-                        }}
+                        onChange={(e) =>
+                          setInputValues({ ...InputValues, Descripcion: e.target.value })
+                        }
                       />
                     </div>
 
